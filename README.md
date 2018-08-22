@@ -22,5 +22,7 @@ $> npm install
 $> npm start
 ```
 
+go to localhost:3000 to view app.
+
 ## :triangular_ruler: Design File
 https://www.figma.com/file/BsuOcLGqjygaDYbRqz3GPaTl/Sprouts?node-id=0%3A1
