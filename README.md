@@ -1,12 +1,13 @@
 # Sprouts
+Development repo for Sprouts web app.
 
 ## :bullettrain_side: Tech Stack
-Frontend: HTML, CSS, JQuery
-Backend: Node.js, Express
+Frontend: HTML, CSS, JQuery <br/>
+Backend: Node.js, Express <br/>
 AWS: EC2, Dynamo, Cognito
 
 ## :package: Setup
-Node version: 9.2.0
+Node version: 9.2.0 <br/>
 NPM version: 5.5.1
 
 ### Install NPM packages
