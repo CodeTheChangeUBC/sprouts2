@@ -2,9 +2,9 @@
 Development repo for Sprouts web app.
 
 ## :bullettrain_side: Tech Stack
-Frontend: HTML, CSS, JQuery <br/>
-Backend: Node.js, Express <br/>
-AWS: EC2, Dynamo, Cognito
+Frontend: HTML, CSS, JQuery, React.js <br/>
+Backend: AWS Amplify <br/>
+AWS: EC2, DynamoDB, Cognito, MobileHub 
 
 ## :package: Setup
 Node version: 9.2.0 <br/>
