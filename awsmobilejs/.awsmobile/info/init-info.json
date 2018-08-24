@@ -1,0 +1,81 @@
+{
+	"projectPath": "/Users/SumeetGrewal/Projects/sprouts",
+	"mobileProjectID": "sprouts-test",
+	"backupAWSMobileJSDirPath": "/Users/SumeetGrewal/Projects/sprouts/~awsmobilejs-2018-08-23-16-51-10",
+	"projectInfo": {
+		"ProjectName": "sprouts",
+		"ProjectPath": "/Users/SumeetGrewal/Projects/sprouts",
+		"InitializationTime": "2018-08-23-16-50-05",
+		"LastConfigurationTime": "2018-08-23-16-48-54",
+		"LastNPMInstallTime": "",
+		"FrontendLastBuildTime": "",
+		"LastPublishTime": "",
+		"BackendLastSyncTime": "2018-08-23-16-49-16",
+		"BackendLastBuildTime": "",
+		"BackendLastPushTime": "",
+		"BackendProjectID": "2cce3bd7-145e-4c67-b177-471810f85191",
+		"BackendProjectName": "sprouts-test",
+		"BackendProjectConsoleUrl": "https://console.aws.amazon.com/mobilehub/home#/2cce3bd7-145e-4c67-b177-471810f85191/build",
+		"BackendProjectCreationTime": "2018-08-23T23:48:58.108Z",
+		"BackendProjectLastUpdatedTime": "2018-08-23T23:49:09.170Z",
+		"Framework": "react",
+		"BackendLastSyncToDevTime": "2018-08-23-16-49-16"
+	},
+	"projectConfig": {
+		"SourceDir": "src",
+		"DistributionDir": "build",
+		"BuildCommand": "npm run-script build",
+		"StartCommand": "npm run-script start"
+	},
+	"backendProject": {
+		"features": {
+			"content-delivery": {
+				"attributes": {
+					"enabled": true,
+					"visibility": "public-global"
+				},
+				"components": {
+					"release": {
+						"backend-class": "Bucket"
+					}
+				},
+				"backend-class": "ContentDelivery"
+			},
+			"mobile-analytics": {
+				"components": {
+					"analytics": {
+						"backend-class": "PinpointAnalytics"
+					}
+				},
+				"backend-class": "Pinpoint"
+			},
+			"sign-in": {
+				"backend-class": "SignIn"
+			}
+		},
+		"name": "sprouts-test",
+		"region": "us-west-2",
+		"backend-class": "Project"
+	},
+	"packageJson": {
+		"name": "sprouts",
+		"version": "0.1.0",
+		"private": true,
+		"dependencies": {
+			"aws-amplify": "^1.0.6",
+			"aws-amplify-react": "^1.0.6",
+			"react": "^16.4.2",
+			"react-dom": "^16.4.2",
+			"react-scripts": "1.1.5"
+		},
+		"scripts": {
+			"start": "react-scripts start",
+			"build": "react-scripts build",
+			"test": "react-scripts test --env=jsdom",
+			"eject": "react-scripts eject"
+		}
+	},
+	"framework": "react",
+	"initialStage": "valid",
+	"strategy": "link"
+}
