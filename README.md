@@ -7,8 +7,15 @@ Backend: AWS Amplify <br/>
 AWS: EC2, DynamoDB, Cognito, MobileHub 
 
 ## :package: Setup
-Node version: 9.2.0 <br/>
-NPM version: 5.5.1
+Node version: > 8.x <br/>
+NPM version: 6.4.0
+
+### Install AWS Mobile and AWS Amplify CLI
+
+```bash
+$> npm install -g awsmobile-cli
+$> awsmobile configure // need credentials from CTC 
+```
 
 ### Install NPM packages
 
@@ -19,7 +26,7 @@ $> npm install
 ### Run app locally
 
 ```bash
-$> npm start
+$> awsmobile run
 ```
 
 go to http://localhost:3000 to view app.
