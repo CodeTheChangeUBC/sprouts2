@@ -1,7 +1,5 @@
 import Amplify from "aws-amplify";
 import aws_exports from './aws-exports';
-
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
