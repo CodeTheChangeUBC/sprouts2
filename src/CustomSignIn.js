@@ -1,8 +1,7 @@
 import React from 'react';
 import { SignIn } from 'aws-amplify-react';
 import { Auth, JS } from 'aws-amplify';
-import { formStyle, inputStyle, sectionFooter } from './App';
-import { CustomSignUp } from './CustomSignUp';
+import { formStyle, sectionFooter } from './App';
 export class CustomSignIn extends SignIn {
     constructor(props) {
         super(props);
@@ -18,6 +17,7 @@ export class CustomSignIn extends SignIn {
         this.handleUsername = this.handleUsername.bind(this);
         this.handlePassword = this.handlePassword.bind(this);
         this.handleSignUp = this.handleSignUp.bind(this);
+        this.handleConfirmSignUp = this.handleConfirmSignUp.bind(this);
     }
     checkContact(user) {
         Auth.verifiedContact(user)
@@ -37,7 +37,7 @@ export class CustomSignIn extends SignIn {
         // Logger.debug('Sign In for ' + username);
         Auth.signIn(username, password)
             .then(user => {
-                // Logger.debug(user);
+                alert("Login success");
                 const requireMFA = (user.Session !== null);
                 if (user.challengeName === 'SMS_MFA') {
                     this.changeState('confirmSignIn', user);
@@ -50,7 +50,13 @@ export class CustomSignIn extends SignIn {
                     this.checkContact(user);
                 }
             })
-            .catch(err => this.error(err));
+            .catch(err => {
+                alert("Please try again");
+                this.error(err);
+            })
+    }
+    handleConfirmSignUp(event) {
+        this.changeState("confirmSignUp");
     }
     handleSignUp(event) {
         this.changeState("signUp");
@@ -64,7 +70,6 @@ export class CustomSignIn extends SignIn {
     handleSubmit(event) {
         alert('DATA: ' + this.state.username + " : " + this.state.password);
         this.signIn();
-        alert("State : " + this.props.authState);
     }
     render() {
         if (this.props.authState !== 'signIn') {
@@ -75,17 +80,19 @@ export class CustomSignIn extends SignIn {
             <form onSubmit={this.handleSubmit}>
                 <label>
                     Username:
-        <input style={inputStyle} type="text" id="username" value={this.state.username} onChange={this.handleUsername} />
+        <input type="text" id="username" value={this.state.username} onChange={this.handleUsername} />
                 </label>
                 <br />
                 <label>
                     Password:
-        <input style={inputStyle} type="text" id="password" value={this.state.password} onChange={this.handlePassword} />
+        <input type="text" id="password" value={this.state.password} onChange={this.handlePassword} />
                 </label>
                 <br />
                 <input type="submit" value="Submit" />
             </form>
             <button onClick={this.handleSignUp} value="Sign Up">Sign Up</button>
+            <button onClick={this.handleConfirmSignUp} value="Confirm Code">Confirm Code</button>
+
         </div>)
     }
 }

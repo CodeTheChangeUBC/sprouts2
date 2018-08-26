@@ -1,7 +1,7 @@
 import React from 'react';
 import { SignUp } from 'aws-amplify-react';
 import { Auth } from 'aws-amplify';
-import { logger, formStyle, inputStyle } from './App';
+import { formStyle } from './App';
 
 export class CustomSignUp extends SignUp {
     constructor(props) {
@@ -22,10 +22,9 @@ export class CustomSignUp extends SignUp {
     }
     signUp() {
         const { username, password, email, phone_number } = this.state;
-        logger.debug('Sign Up for ' + username);
         Auth.signUp(username, password, email, phone_number)
             .then(data => {
-                logger.debug(data);
+                alert("Please check your email for your confirmation code")
                 this.changeState('confirmSignUp', username);
             })
             .catch(err => this.error(err));
@@ -53,22 +52,22 @@ export class CustomSignUp extends SignUp {
             <form onSubmit={this.handleSubmit}>
                 <label>
                     Name:
-        <input style={inputStyle} type="text" id="name" value={this.state.name} onChange={this.handleName} />
+        <input type="text" id="name" value={this.state.name} onChange={this.handleName} />
                 </label>
                 <br />
                 <label>
                     Username:
-        <input style={inputStyle} type="text" id="username" value={this.state.username} onChange={this.handleUsername} />
+        <input type="text" id="username" value={this.state.username} onChange={this.handleUsername} />
                 </label>
                 <br />
                 <label>
                     Password:
-        <input style={inputStyle} type="text" id="password" value={this.state.password} onChange={this.handlePassword} />
+        <input type="text" id="password" value={this.state.password} onChange={this.handlePassword} />
                 </label>
                 <br />
                 <label>
                     Email:
-        <input style={inputStyle} type="text" id="email" value={this.state.email} onChange={this.handleEmail} />
+        <input type="text" id="email" value={this.state.email} onChange={this.handleEmail} />
                 </label>
                 <br />
                 <input type="submit" value="Submit" />
