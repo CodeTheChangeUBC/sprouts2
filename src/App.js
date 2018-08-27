@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import './App.css';
 import { ConfirmSignIn, ConfirmSignUp, ForgotPassword, SignUp, VerifyContact, withAuthenticator } from 'aws-amplify-react';
 import { MySignIn } from './components/authentication/MySignIn';
-import { Auth } from 'aws-amplify';
+import Amplify, { Storage, Auth } from 'aws-amplify';
 
 
 const Home = () => (
