@@ -52,33 +52,67 @@ const Topics = ({ match }) => (
   </div>
 )
 
-const BasicExample = () => (
-  <Router>
-    <div>
-      <ul>
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/about">About</Link></li>
-        <li><Link to="/topics">Topics</Link></li>
-      </ul>
+const BasicExample = (props) => {
+  if(props.userGroup === 'none') {
+    return (
+      <Router>
+        <div>
+          <h1>Hello, {props.userGroup}</h1>
 
-      <hr/>
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/topics">Topics</Link></li>
+          </ul>
 
-      <Route exact path="/" component={Home}/>
-      <Route path="/about" component={About}/>
-      <Route path="/topics" component={Topics}/>
-    </div>
-  </Router>
-)
+          <hr/>
+
+          <Route exact path="/" component={Home}/>
+          <Route path="/about" component={About}/>
+          <Route path="/topics" component={Topics}/>
+        </div>
+      </Router>
+    );
+  } else {
+    return (
+      <Router>
+        <div>
+          <h1>Hello, {props.userGroup}</h1>
+
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/topics">Topics</Link></li>
+          </ul>
+
+          <hr/>
+
+          <Route exact path="/" component={Home}/>
+          <Route path="/about" component={About}/>
+          <Route path="/topics" component={Topics}/>
+        </div>
+      </Router>
+    );
+  }
+  
+}
 
 class App extends Component {
-  render() {
-    let userGroup;
+  constructor(props) {
+    super(props);
+    this.state = { userGroup: "none" };
+  }
+
+  componentDidMount() {
     Auth.currentSession()
-      .then(session => userGroup = session.accessToken.payload['cognito:groups'][0])
+      .then(session => this.setState({userGroup: session.accessToken.payload['cognito:groups'][0]}))
       .catch(err => console.log(err));
+  }
+
+  render() {  
     return(
       <div>
-        <BasicExample />
+        <BasicExample userGroup={ this.state.userGroup } />
       </div>
     );
   }
