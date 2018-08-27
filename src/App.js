@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import { ConfirmSignIn, ConfirmSignUp, ForgotPassword, SignUp, VerifyContact, withAuthenticator } from 'aws-amplify-react';
 import { MySignIn } from './components/authentication/MySignIn';
+import Amplify, { Storage } from 'aws-amplify';
+import aws_exports from './aws-exports';
+Amplify.configure(aws_exports);
 
 class App extends Component {
   render() {
