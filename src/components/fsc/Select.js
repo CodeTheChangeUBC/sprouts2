@@ -8,11 +8,9 @@ export const Select = (props) => {
   }
 
   return(
-    <div className="">
-      <h3 className="">
-        {props.title}
-      </h3>
-      <select className="" onChange={props.update}>
+    <div className="form-group">
+      <label> {props.title} </label>
+      <select className="form-control" onChange={props.update}>
         <option selected>Choose...</option>
         {options}
       </select>

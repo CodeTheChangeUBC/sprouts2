@@ -3,13 +3,9 @@ import PropTypes from "prop-types";
 
 export const Input = (props) => {
   return(
-    <div className="">
-      <h3 className="">
-        {props.title}
-      </h3>
-      <div className="">
-        <input type={props.type} className="" placeholder={props.placeholder} aria-label={props.placeholder} onChange={props.update}>
-      </div>
+    <div className="form-group">
+      <label> {props.title} </label>
+      <input type={props.type} className="form-control" placeholder={props.placeholder} aria-label={props.placeholder} onChange={props.update}>
     </div>
   );
 };

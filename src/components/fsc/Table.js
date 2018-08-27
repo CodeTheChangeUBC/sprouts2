@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 export const Table = (props) => {
   return(
-    <table className="">
+    <table className="table">
       <thead>
         <tr scope="col">{props.col1}</tr>
         <tr scope="col">{props.col2}</tr>
