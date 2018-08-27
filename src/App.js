@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import './App.css';
-import { ConfirmSignUp, withAuthenticator } from 'aws-amplify-react';
+import { ConfirmSignIn, withAuthenticator } from 'aws-amplify-react';
 import {
     Auth,
     I18n,
     Logger} from 'aws-amplify';
 import { CustomSignIn } from './CustomSignIn';
 import { CustomSignUp } from './CustomSignUp';
+import { CustomConfirmSignUp } from './CustomConfirmSignUp';
 
 export const formStyle = {
     color: "teal", 
@@ -24,102 +25,63 @@ export const sectionFooter = {
     borderTopRightRadius: '3px'
 }
 
-class CustomConfirmSignUp extends ConfirmSignUp {
+class CustomConfirmSignIn extends ConfirmSignIn {
     constructor(props) {
         super(props);
 
-        this._validAuthStates = ['confirmSignUp'];
+        this._validAuthStates = ['confirmSignIn'];
         this.state = {
-            username: null,
             code: null,
             error: null
         }
 
         this.confirm = this.confirm.bind(this);
-        this.resend = this.resend.bind(this);
-        this.handleUsername = this.handleUsername.bind(this);
-        this.handleCode = this.handleCode.bind(this);
         this.handleConfirm = this.handleConfirm.bind(this);
-        this.handleResend = this.handleResend.bind(this);
-        this.handleSignIn = this.handleSignIn.bind(this);
+        this.handleCode = this.handleCode.bind(this);
     }
-
-    confirm() {
-        const { username, code } = this.state;
-        Auth.confirmSignUp(username, code)
-            .then(data => this.changeState('signedUp'))
-            .catch(err => this.error(err));
-    }
-
-    resend() {
-        const { username } = this.state;
-        Auth.resendSignUp(username)
-            .then(() => true)
-            .catch(err => this.error(err));
-    }
-
-    componentWillReceiveProps(nextProps) {
-        const username = nextProps.authData;
-        if (username && !this.state.username) { this.setState({ username }); }
-    }
-
-    handleResend(event) {
-        this.resend();
+    handleCode(event) {
+        this.setState({ code: event.target.value });
     }
 
     handleConfirm(event) {
         this.confirm();
     }
-
-    handleSignIn(event) {
-        this.changeState("signIn");
+    confirm() {
+        const user = this.props.authData;
+        const { code } = this.state;
+        alert('Confirm Sign In for ' + user.username);
+        Auth.confirmSignIn(user, code)
+            .then(data => this.changeState('signedIn'))
+            .catch(err => this.error(err));
     }
 
-    handleCode(event) {
-        this.setState({code: event.target.value});
-    }
-
-    handleUsername(event) {
-        this.setState({username: event.target.value});
-    }
-    showComponent() {
+    showComponent(theme) {
         return (
-            <div style={formStyle}>
-                <h1>Confirm Sign Up</h1>
-                <form>
-                    <label>
-                        Username:
-                            <input type="text" id="username" value={this.state.username} onChange={this.handleUsername} />
-                    </label>
-                    <br/>
-                    <label>
-                        Confirmation Code:
-                                <input type="text" id="confCode" value={this.state.code} onChange={this.handleCode} />
-                    </label>
-                    <br/>
-                    <button
-                        onClick={this.handleConfirm}
-                        disabled={!this.state.username || !this.state.code}
-                        value="Confirm">Confirm</button>
-                    <button
-                        onClick={this.handleResend}
-                        disabled={!this.state.username}
-                        value="Resend">Resend Code</button>
-                </form>
-                <button onClick={this.handleSignIn} value="Sign In">Back to Sign In</button>
-
-            </div>
+                <div style={formStyle}>
+                    <h2>Confirm Sign In</h2>
+                    <form>
+                        <label> 
+                            Confirmation Code: 
+                            <textarea title="Code" onChangeText={this.handleCode}></textarea>
+                        </label>
+                        <button
+                            title="confirm"
+                            onClick={this.handleConfirm}
+                            disabled={!this.state.code}
+                        />
+                    </form>
+                </div>
+            
         );
     }
 }
-
 
 
 class App extends Component {
   render() {
        return(
            <div>
-            <h1>Sprouts Application</h1>
+            <h1 style={{textAlign: "center"}}>Sprouts Application</h1>
             </div>
     );
   }
@@ -129,4 +91,5 @@ export default withAuthenticator(App, {includeGreetings:true}, [
    <CustomSignIn/>,
    <CustomSignUp/>,
    <CustomConfirmSignUp/>,
+   <CustomConfirmSignIn/>,
 ]);

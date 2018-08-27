@@ -51,7 +51,6 @@ export class CustomSignIn extends SignIn {
                 }
             })
             .catch(err => {
-                alert("Please try again");
                 this.error(err);
             })
     }
@@ -91,7 +90,7 @@ export class CustomSignIn extends SignIn {
                 <input type="submit" value="Submit" />
             </form>
             <button onClick={this.handleSignUp} value="Sign Up">Sign Up</button>
-            <button onClick={this.handleConfirmSignUp} value="Confirm Code">Confirm Code</button>
+            {/* <button onClick={this.handleConfirmSignUp} value="Confirm Code">Confirm Code</button> */}
 
         </div>)
     }
