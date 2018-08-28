@@ -9,6 +9,8 @@ import { ShiftDetails } from './admin_panel/ShiftDetails';
 
 // Volunteer Views
 import { Options } from './volunteer/Options';
+import { LogHours } from './volunteer/LogHours';
+import { ShiftHistory } from './volunteer/ShiftHistory';
 
 export class RoutingTable extends Component {
   render() {
@@ -17,8 +19,8 @@ export class RoutingTable extends Component {
         <Router>
           <div>
             <Route exact path="/" component={Options}/>
-            {/* <Route path="/logHours" component={LogHours}/> */}
-            {/* <Route path="/shiftHistory" component={ShiftHistory}/> */}
+            <Route path="/logHours" component={LogHours}/>
+            <Route path="/shiftHistory" render={(props) => <ShiftHistory {...props} username="test"/>}/>
           </div>
         </Router>
       );

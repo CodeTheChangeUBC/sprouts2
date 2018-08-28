@@ -1,8 +1,9 @@
 import React from 'react';
-import { Table } from './fsc/Table';
-import { Header } from './fsc/Header';
 import PropTypes from "prop-types";
 import { API } from 'aws-amplify';
+import { Header } from '../fsc/Header';
+import { Table } from '../fsc/Table';
+
 
 export class ShiftHistory extends React.Component {
   constructor(props) {
@@ -43,15 +44,17 @@ export class ShiftHistory extends React.Component {
   render() {
     return (
       <div>
-        <Header title="Shift History" />
-        <div className="row">
-          <div className="col-12">
-            <Table
-              col1="USER"
-              col2="LOCATION"
-              col3="DATE"
-              data={this.state.tableData}
-            />
+        <Header title="Shift History" link={() => this.props.history.push('/')} />
+        <div className="container">
+          <div className="row">
+            <div className="col-12 my-3">
+              <Table
+                col1="USER"
+                col2="LOCATION"
+                col3="DATE"
+                data={this.state.tableData}
+              />
+            </div>
           </div>
         </div>
       </div>
