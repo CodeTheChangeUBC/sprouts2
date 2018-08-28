@@ -4,38 +4,31 @@ import { I18n} from 'aws-amplify';
 
 export class MySignIn extends SignIn {
   showComponent() {
-    const { authState, hide = [], federated, onStateChange } = this.props;
-    if (hide && hide.includes(SignIn)) { return null; }
-    const hideSignUp = hide.some(component => component.name === 'SignUp')
-    const hideForgotPassword = hide.some(component => component.name === 'ForgotPassword')
-
     return (
       <div className="container">
-        <div className="row">
-          <div className="col-12 text-center my-3">
+        <div className="row justify-content-center">
+          <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 text-center my-3">
             <h1>Sign In</h1>
             <div className="form-group">
-              <input className="form-control" type="text" id="username" key="username" name="username" placeholder="Username" onChange={this.handleInputChange}/>
+              <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="text" id="username" key="username" name="username" placeholder="Username" onChange={ this.handleInputChange }/>
             </div>
             <div className="form-group">
-              <input className="form-control" type="password" id="password" key="password" name="password" placeholder="Password" onChange={this.handleInputChange}/>
+              <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="password" id="password" key="password" name="password" placeholder="Password" onChange={ this.handleInputChange }/>
             </div>
-            <div className="row justify-content-center py-1">
+            <div className="row py-1">
               <div className="col-12 col-md-">
-                <button className="btn btn-block rounded-0 btn-primary" onClick={ this.signIn } value="Sign In" >{I18n.get('Sign In')}</button>
+                <button type="button" className="btn btn-block rounded-0 btn-primary" onClick={ this.signIn } value="Sign In" >{ I18n.get('Sign In') }</button>
               </div>
             </div>
             <div className="py-1">
-              { !hideSignUp && 
-                <a className="btn btn-block rounded-0 btn-primary text-white" onClick={() => this.changeState('signUp')}>
-                  {I18n.get('Sign Up')}
-                </a> }
+              <button type="button" className="btn btn-block rounded-0 btn-primary text-white" onClick={ () => this.changeState('signUp') }>
+                {I18n.get('Create Account')}
+              </button>
             </div>
             <div className="py-1">
-              { !hideForgotPassword && 
-                <a href="#" onClick={() => this.changeState('forgotPassword')}>
-                  {I18n.get('Forgot Password')}
-                </a> }
+              <button type="button" className="btn btn-link" onClick={ () => this.changeState('forgotPassword') }>
+                {I18n.get('Forgot password?')}
+              </button>
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Table } from './fsc/Table';
 import { Header } from './fsc/Header';
 import PropTypes from "prop-types";
+import { API } from 'aws-amplify';
 
 export class ShiftHistory extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ export class ShiftHistory extends React.Component {
     };
   }
 
-  private getTableData() {
+  getTableData() {
     let apiName = 'Volunteer_LogsCRUD';
     let path = '/Volunteer_Logs';
     let init = {
@@ -23,6 +24,7 @@ export class ShiftHistory extends React.Component {
     };
 
     API.get(apiName, path, init).then(response => {
+      console.log("api response: " + response);
       this.setState({
         apiData: response.data
       });
@@ -31,7 +33,7 @@ export class ShiftHistory extends React.Component {
     });
   }
 
-  private parseTableData() {
+  parseTableData() {
     // TODO
     // parse through this.state.apiData
     // put it into [ row1: { col1: string ... }, ... ] format
@@ -39,17 +41,21 @@ export class ShiftHistory extends React.Component {
   }
 
   render() {
-    <Header title="Shift History" />
-    <div className="row">
-      <div className="col-12">
-        <Table
-          col1="USER"
-          col2="LOCATION"
-          col3="DATE"
-          data={this.state.tableData}
-        />
+    return (
+      <div>
+        <Header title="Shift History" />
+        <div className="row">
+          <div className="col-12">
+            <Table
+              col1="USER"
+              col2="LOCATION"
+              col3="DATE"
+              data={this.state.tableData}
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    );
   }
 }
 
