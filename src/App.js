@@ -15,7 +15,11 @@ class App extends Component {
 
   componentDidMount() {
     Auth.currentSession()
-      .then(session => this.setState({userGroup: session.accessToken.payload['cognito:groups'][0]}))
+      .then((session) => {
+        if (session.accessToken.payload['cognito:groups']) {
+          this.setState({userGroup: session.accessToken.payload['cognito:groups'][0]});
+        }
+      })
       .catch(err => console.log(err));
   }
 

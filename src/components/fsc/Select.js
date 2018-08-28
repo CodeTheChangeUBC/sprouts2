@@ -5,13 +5,14 @@ export const Select = (props) => {
   let dropdown = props.dropdown;
   let options = new Array(dropdown.length);
   for(let i = 0; i < dropdown.length; i++) {
-    options.push(<option key={i} value={dropdown[i]}>{dropdown[i]}</option>);
+    options.push(<option key={(i+1)} value={dropdown[i]}>{dropdown[i]}</option>);
   }
 
   return(
     <div className="form-group">
       <label> {props.title} </label>
       <select value={props.value} className="form-control" onChange={props.update}>
+        <option key="0" value="Choose...">Choose...</option>
         {options}
       </select>
     </div>

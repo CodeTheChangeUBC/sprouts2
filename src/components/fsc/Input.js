@@ -13,7 +13,6 @@ export const Input = (props) => {
 Input.propTypes = {
   title: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
   update: PropTypes.func.isRequired,
   type: PropTypes.string
 };

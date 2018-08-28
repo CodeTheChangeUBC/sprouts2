@@ -11,7 +11,7 @@ export class ViewLogs extends Component {
     this.state = {
       fromDate: "",
       toDate: "",
-      users: "All users"
+      users: ""
     };
   }
 
