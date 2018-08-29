@@ -22,7 +22,7 @@ const renderRows = (data, select) => {
   let rows = new Array(Object.keys(data).length);
   for (let i = 0; i < data.length; i++) {
     rows.push(
-      <tr key={i} onClick={() => select(i)}>
+      <tr key={i} onClick={() => {if (select) { select(i) }}}>
         <td>{data[i].col1}</td>
         <td>{data[i].col2}</td>
         <td>{data[i].col3}</td>
