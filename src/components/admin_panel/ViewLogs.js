@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Header } from '../fsc/Header';
 import { Button } from '../fsc/Button';
 import { Table } from '../fsc/Table';
 import { Input } from '../fsc/Input';
 import { Select } from '../fsc/Select';
 
-export class ViewLogs extends Component {
+export class ViewLogs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

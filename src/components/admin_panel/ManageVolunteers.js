@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Header } from '../fsc/Header';
 import { Button } from '../fsc/Button';
 import { Table } from '../fsc/Table';
 
-export class ManageVolunteers extends Component {
+export class ManageVolunteers extends React.Component {
   render() {
     return (
       <div>

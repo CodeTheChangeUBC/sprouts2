@@ -1,23 +1,26 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { API } from 'aws-amplify';
 import { Header } from '../fsc/Header';
 import { Button } from '../fsc/Button';
 import { Input } from '../fsc/Input';
 import { Select } from '../fsc/Select';
+import { Auth } from 'aws-amplify';
 
-export class LogHours extends Component {
+export class LogHours extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      date: "",
-      startTime: "",
-      endTime: "",
-      location: "",
-      meal: ""
-    };
+    this.state = this.getDefaultState();
   }
 
   componentDidMount() {
+    Auth.currentSession()
+      .then((session) => {
+        this.setState({name: session.accessToken.payload.username});
+      })
+      .catch(err => console.log(err));
+  }
+
+  getDefaultState() {
     let d = new Date();
     let month = d.getMonth() + 1;
     let day = d.getDate();
@@ -28,21 +31,29 @@ export class LogHours extends Component {
     let startTime = (startHour < 10 ? '0' : '') + startHour + ':' + (minute < 10 ? '0' : '') + minute;
     let endTime = (endHour < 10 ? '0' : '') + endHour + ':' + (minute < 10 ? '0' : '') + minute;
 
-    this.setState({date: date});
-    this.setState({startTime: startTime});
-    this.setState({endTime: endTime});
+    return {
+      name: "",
+      date: date,
+      startTime: startTime,
+      endTime: endTime,
+      location: "",
+      meal: "",
+      cost: ""
+    };
   }
 
   handleSubmit() {
-    //TODO: make a post request to the db
-    let apiName = 'Volunteer_LogsCRUD'; // replace this with your api name.
-    let path = '/Volunteer_Logs'; //replace this with the path you have configured on your API
-    API.get(apiName, path).then(response => {
+    let apiName = 'Volunteer_LogsCRUD';
+    let path = '/Volunteer_Logs';
+    console.log(this.state);
+    let init = {
+      body: this.state
+    };
+    API.post(apiName, path, init).then(response => {
       console.log(response);
     }).catch(error => {
       console.log(error.response)
     });
-    
   }
 
   render() {
@@ -52,12 +63,13 @@ export class LogHours extends Component {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-12 my-3">
-              <Input value={this.state.date} title="Date"  type="date" update={(event) => this.setState({date: event.target.value})}/>
+              <Input value={this.state.date} title="Date" type="date" update={(event) => this.setState({date: event.target.value})}/>
               <Input value={this.state.startTime} title="Start time" type="time" update={(event) => this.setState({startTime: event.target.value})}/>
               <Input value={this.state.endTime} title="End time" type="time" update={(event) => this.setState({endTime: event.target.value})}/>
               <Select value={this.state.location} title="Location" update={(event) => this.setState({location: event.target.value})} dropdown={["Sprouts Cafe", "Option 2", "Option 3"]} />
               <Select value={this.state.meal} title="Meal" update={(event) => this.setState({meal: event.target.value})} dropdown={["Sandwich", "Coffee", "Cookie"]} />
-              <Button title="Submit" color="btn-primary rounded-0 btn-block" onClick={ this.handleSubmit } />
+              <Input value={this.state.cost} title="Cost ($)" type="number" update={(event) => this.setState({cost: event.target.value})} />
+              <Button title="Submit" color="btn-primary rounded-0 btn-block" onClick={this.handleSubmit.bind(this)} />
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-export class ShiftDetails extends Component {
+export class ShiftDetails extends React.Component {
   render() {
     return (
       <h1>Shift Details</h1>

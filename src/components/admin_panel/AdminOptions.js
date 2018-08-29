@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Auth, I18n } from 'aws-amplify';
 import { Header } from '../fsc/Header';
 import { Button } from '../fsc/Button';
 
 
-export class AdminOptions extends Component {
+export class AdminOptions extends React.Component {
   signOut() {
     Auth.signOut()
       .then(() => window.location.reload())
