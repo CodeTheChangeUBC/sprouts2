@@ -12,17 +12,17 @@ export const Table = (props) => {
         </tr>
       </thead>
       <tbody>
-        {renderRows(props.data)}
+        {renderRows(props.data, props.select)}
       </tbody>
     </table>
   );
 };
 
-const renderRows = (data) => {
+const renderRows = (data, select) => {
   let rows = new Array(Object.keys(data).length);
   for (let i = 0; i < data.length; i++) {
     rows.push(
-      <tr key={i}>
+      <tr key={i} onClick={select}>
         <td>{data[i].col1}</td>
         <td>{data[i].col2}</td>
         <td>{data[i].col3}</td>

@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 export const ShiftDetails = (props) => {
   return (
     <div>
-      <Header title="Shift Details" link={() => this.props.history.push('/')}/>
+      <Header title="Shift Details" link={() => props.history.push('/viewLogs')}/>
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-12 my-3">

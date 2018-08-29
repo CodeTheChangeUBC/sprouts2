@@ -11,31 +11,31 @@ features:
           sdk-generation-stage-name: Development
         paths:
           /Volunteer_Logs: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/VolunteerLogs-20180828182248.zip
+            codeFilename: uploads/VolunteerLogs-20180829015033.zip
             description: 'Handler for calls to resource path : /Volunteer_Logs/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: s1IH01eqvhCD3AQmDsEzPaNYAK3eGLVyqr6RjL7pPpI=
+            hashcode: gC8ZzEa2dMZBTsLfQD4igRt11T4sOA55jRWqkC6085c=
             memorySize: '128'
-            modified: '2018-08-29T01:23:31.317+0000'
+            modified: '2018-08-29T08:51:09.407+0000'
             name: VolunteerLogs
             runtime: nodejs6.10
             timeout: '3'
-            version: VJMGzh6HWSKn_4Eug5htorpPYtBkNHl9
+            version: dQ0cqeJNZYPozHqeASrO.5jeRbEMINHn
           '/Volunteer_Logs/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/VolunteerLogs-20180828182248.zip
+            codeFilename: uploads/VolunteerLogs-20180829015033.zip
             description: 'Handler for calls to resource path : /Volunteer_Logs/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: s1IH01eqvhCD3AQmDsEzPaNYAK3eGLVyqr6RjL7pPpI=
+            hashcode: gC8ZzEa2dMZBTsLfQD4igRt11T4sOA55jRWqkC6085c=
             memorySize: '128'
-            modified: '2018-08-29T01:23:31.317+0000'
+            modified: '2018-08-29T08:51:09.407+0000'
             name: VolunteerLogs
             runtime: nodejs6.10
             timeout: '3'
-            version: 17bGLWM9HWa0AH3GLFza3CqdFFKD7wVo
+            version: J_MjW3fembV3CDrLhT9uJTrNJ0fbxmHT
       sampleCloudApi: !com.amazonaws.mobilehub.v0.API 
         attributes:
           name: sampleCloudApi

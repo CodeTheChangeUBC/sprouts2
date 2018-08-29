@@ -24,12 +24,11 @@ export class LogHours extends React.Component {
     let d = new Date();
     let month = d.getMonth() + 1;
     let day = d.getDate();
-    let startHour = d.getHours() - 6;
-    let endHour = d.getHours();
+    let hour = d.getHours();
     let minute = d.getMinutes();
     let date = d.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
-    let startTime = (startHour < 10 ? '0' : '') + startHour + ':' + (minute < 10 ? '0' : '') + minute;
-    let endTime = (endHour < 10 ? '0' : '') + endHour + ':' + (minute < 10 ? '0' : '') + minute;
+    let startTime = (hour < 10 ? '0' : '') + hour + ':' + (minute < 10 ? '0' : '') + minute;
+    let endTime = (hour < 10 ? '0' : '') + hour + ':' + (minute < 10 ? '0' : '') + minute;
 
     return {
       name: "",
@@ -59,7 +58,8 @@ export class LogHours extends React.Component {
   render() {
     let disabled = true;
     if (this.state.date && this.state.startTime && this.state.endTime &&
-        this.state.location && this.state.meal && this.state.cost) {
+        this.state.location !== "Choose..." && this.state.location && 
+        this.state.meal !== "Choose..." && this.state.meal && this.state.cost) {
       disabled = false;
     }
     return (
@@ -68,11 +68,11 @@ export class LogHours extends React.Component {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-12 my-3">
-              <Input value={this.state.date} title="Date" type="date" update={(event) => this.setState({date: event.target.value})}/>
+              <Input value={this.state.date} title="Date" type="date" disabled={true} update={(event) => this.setState({date: event.target.value})}/>
               <Input value={this.state.startTime} title="Start time" type="time" update={(event) => this.setState({startTime: event.target.value})}/>
               <Input value={this.state.endTime} title="End time" type="time" update={(event) => this.setState({endTime: event.target.value})}/>
               <Select value={this.state.location} title="Location" update={(event) => this.setState({location: event.target.value})} dropdown={["Sprouts Cafe", "Option 2", "Option 3"]} />
-              <Select value={this.state.meal} title="Meal" update={(event) => this.setState({meal: event.target.value})} dropdown={["Sandwich", "Coffee", "Cookie"]} />
+              <Select value={this.state.meal} title="Meal" update={(event) => this.setState({meal: event.target.value})} dropdown={["Sandwich", "Coffee", "Cookie", "None"]} />
               <Input value={this.state.cost} title="Cost ($)" type="number" update={(event) => this.setState({cost: event.target.value})} />
               <p>(Every field is required)</p>
               <Button title="Submit" color="btn-primary rounded-0 btn-block" onClick={this.handleSubmit.bind(this)} disabled={disabled} />

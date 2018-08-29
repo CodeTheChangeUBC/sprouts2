@@ -33,7 +33,7 @@ export class RoutingTable extends Component {
             <Route exact path="/" component={AdminOptions}/>
             <Route path="/manageVolunteers" component={ManageVolunteers}/>
             <Route path="/viewLogs" component={ViewLogs}/>
-            <Route path="/shiftDetails" component={ShiftDetails}/>
+            <Route path="/shiftDetails" render={(props) => <ShiftDetails {...props} name="asdf" />}/>
           </div>
         </Router>
       );
