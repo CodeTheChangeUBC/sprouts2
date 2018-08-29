@@ -57,6 +57,11 @@ export class LogHours extends React.Component {
   }
 
   render() {
+    let disabled = true;
+    if (this.state.date && this.state.startTime && this.state.endTime &&
+        this.state.location && this.state.meal && this.state.cost) {
+      disabled = false;
+    }
     return (
       <div>
         <Header title="Log Hours" link={() => this.props.history.push('/')}/>
@@ -69,7 +74,8 @@ export class LogHours extends React.Component {
               <Select value={this.state.location} title="Location" update={(event) => this.setState({location: event.target.value})} dropdown={["Sprouts Cafe", "Option 2", "Option 3"]} />
               <Select value={this.state.meal} title="Meal" update={(event) => this.setState({meal: event.target.value})} dropdown={["Sandwich", "Coffee", "Cookie"]} />
               <Input value={this.state.cost} title="Cost ($)" type="number" update={(event) => this.setState({cost: event.target.value})} />
-              <Button title="Submit" color="btn-primary rounded-0 btn-block" onClick={this.handleSubmit.bind(this)} />
+              <p>(Every field is required)</p>
+              <Button title="Submit" color="btn-primary rounded-0 btn-block" onClick={this.handleSubmit.bind(this)} disabled={disabled} />
             </div>
           </div>
         </div>
