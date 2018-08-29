@@ -20,7 +20,7 @@ export class RoutingTable extends Component {
           <div>
             <Route exact path="/" component={Options}/>
             <Route path="/logHours" component={LogHours}/>
-            <Route path="/shiftHistory" render={(props) => <ShiftHistory {...props} username="test"/>}/>
+            <Route path="/shiftHistory" component={ShiftHistory}/>
           </div>
         </Router>
       );
