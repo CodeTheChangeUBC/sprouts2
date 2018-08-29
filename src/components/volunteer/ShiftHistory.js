@@ -15,9 +15,9 @@ export class ShiftHistory extends React.Component {
     };
   }
 
-  getTableData() {
+  componentDidMount() {
     let apiName = 'Volunteer_LogsCRUD';
-    let path = '/Volunteer_Logs';
+    let path = '/Volunteer_Logs/test';
     let init = {
       queryStringParameters: {
         name: this.props.username
@@ -25,7 +25,7 @@ export class ShiftHistory extends React.Component {
     };
 
     API.get(apiName, path, init).then(response => {
-      console.log("api response: " + response);
+      console.log("api response: " + JSON.stringify(response));
       this.setState({
         apiData: response.data
       });

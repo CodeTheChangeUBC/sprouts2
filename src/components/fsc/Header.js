@@ -3,15 +3,16 @@ import PropTypes from "prop-types";
 
 export const Header = (props) => {
   return(
-    <div className="container-fluid">
-      <div className="row justify-content-center bg-light py-3">
-        <div className="col-12">
-        {!props.link && <h1 className=" text-center">{props.title}</h1> }
-        {props.link && <h1 className=" text-center pr-5 mr-0 mr-sm-5">
-          <a onClick={props.link} className="btn btn-lg display-1 text-body mr-0 mr-sm-5">&larr;</a> 
-          {props.title}
-        </h1>}
-            
+    <div className="bg-light py-3">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-12">
+            {!props.link && <h3 className="text-center mb-0">{props.title}</h3> }
+            {props.link && <h3 className="text-center mb-0">
+              <a onClick={props.link} className="btn btn-lg btn-link position-absolute d-flex align-self-center p-0 pr-3">&larr;</a> 
+              {props.title}
+            </h3>}  
+          </div>
         </div>
       </div>
     </div>
