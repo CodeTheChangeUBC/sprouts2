@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 export const Header = (props) => {
   return(
-    <div className="bg-light py-3">
+    <div className="bg-light py-3 shadow-sm sticky-top">
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-12">

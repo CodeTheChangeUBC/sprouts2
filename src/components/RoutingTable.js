@@ -13,6 +13,29 @@ import { LogHours } from './volunteer/LogHours';
 import { ShiftHistory } from './volunteer/ShiftHistory';
 
 export class RoutingTable extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      date: "",
+      location: "",
+      startTime: "",
+      endTIme: "",
+      meal: "",
+      cost: ""
+    };
+  }
+
+  handleSelectRow = (value) => {
+    this.setState({name: value.name});
+    this.setState({date: value.date});
+    this.setState({location: value.location});
+    this.setState({startTime: value.startTime});
+    this.setState({endTime: value.endTime});
+    this.setState({meal: value.meal});
+    this.setState({cost: value.cost});
+  }
+
   render() {
     if(this.props.userGroup === 'volunteer') {
       return (
@@ -32,8 +55,18 @@ export class RoutingTable extends Component {
           <div>
             <Route exact path="/" component={AdminOptions}/>
             <Route path="/manageVolunteers" component={ManageVolunteers}/>
-            <Route path="/viewLogs" component={ViewLogs}/>
-            <Route path="/shiftDetails" render={(props) => <ShiftDetails {...props} name="asdf" />}/>
+            <Route path="/viewLogs" render={(props) => <ViewLogs {...props} onSelectRow={this.handleSelectRow} />}/>
+            < Route path = "/shiftDetails"
+            render = {
+                (props) => <ShiftDetails {...props}
+                  name = {this.state.name}
+                  date = {this.state.date}
+                  location = {this.state.location}
+                  startTime = {this.state.startTime}
+                  endTime = {this.state.endTime}
+                  meal = {this.state.meal}
+                  cost = {this.state.cost}
+                />}/>
           </div>
         </Router>
       );

@@ -4,7 +4,7 @@ import { Header } from '../fsc/Header';
 import { Button } from '../fsc/Button';
 import { Table } from '../fsc/Table';
 import { Input } from '../fsc/Input';
-import { Select } from '../fsc/Select';
+// import { Select } from '../fsc/Select';
 
 export class ViewLogs extends React.Component {
   constructor(props) {
@@ -36,7 +36,7 @@ export class ViewLogs extends React.Component {
     let path = '/Volunteer_Logs';
 
     API.get(apiName, path).then(response => {
-      this.setState({apiData: response.data})
+      this.setState({apiData: response.data.reverse()})
       this.parseTableData();
     }).catch(error => {
       console.log(error.response);
@@ -57,7 +57,7 @@ export class ViewLogs extends React.Component {
       }
     });
 
-    this.setState({tableData: tableData.reverse()});
+    this.setState({tableData: tableData});
   }
 
   exportData() {
@@ -70,11 +70,15 @@ export class ViewLogs extends React.Component {
       let line = el.name + "," + el.date + "," + el.location + "," + el.startTime + "," + el.endTime + "," + el.meal + "," +  el.cost;
       lineArray.push(line);
     }); 
-    lineArray = lineArray.reverse();
     csvContent += lineArray.join("\r\n");
 
     var encodedUri = encodeURI(csvContent);
     window.open(encodedUri);
+  }
+
+  selectRow = (el) => {
+    this.props.onSelectRow(this.state.apiData[el]);
+    this.props.history.push('/shiftDetails');
   }
 
   render() {
@@ -86,10 +90,14 @@ export class ViewLogs extends React.Component {
             <div className="col-12 my-3">
               <Input value={this.state.fromDate} title="From date" placeholder="From date" type="date" update={(event) => this.setState({fromDate: event.target.value})}/>
               <Input value={this.state.toDate} title="To date" placeholder="To date" type="date" update={(event) => this.setState({toDate: event.target.value})}/>
-              <Select value={this.state.users} title="Users" update={(event) => this.setState({users: event.target.value})} dropdown={["All users", "Volunteers", "Administrators"]} />
-              <Table col1="User" col2="Date" col3="Location" data={this.state.tableData} select={() => this.props.history.push('/shiftDetails')}/>
-              <Button title="Update" color="btn-primary rounded-0 btn-block" onClick={() => this.parseTableData()} />
-              <Button title="Export Data" color="btn-danger rounded-0 btn-block" onClick={() => this.exportData()} />
+              {/* <Select value={this.state.users} title="Users" update={(event) => this.setState({users: event.target.value})} dropdown={["All users", "Volunteers", "Administrators"]} /> */}
+              <div className="pb-5 mb-4">
+                <Table col1="User" col2="Date" col3="Location" data={this.state.tableData} select={this.selectRow}/>
+              </div>
+              <div className="container bg-white py-1 fixed-bottom">
+                <Button title="Update" color="btn-primary rounded-0 btn-block" onClick={() => this.parseTableData()} />
+                <Button title="Export Data" color="btn-danger rounded-0 btn-block" onClick={() => this.exportData()} />
+              </div>
             </div>
           </div>
         </div>
