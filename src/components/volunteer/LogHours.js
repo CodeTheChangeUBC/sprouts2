@@ -36,8 +36,15 @@ export class LogHours extends React.Component {
       startTime: startTime,
       endTime: endTime,
       location: "",
-      meal: "",
-      cost: ""
+      meal: [["", "0"]],
+      cost: "0",
+      numMeals: 1,
+      mealOptions: {
+        Sandwich: "7",
+        Coffee: "3",
+        Cookie: "1",
+        None: "0"
+      }
     };
   }
 
@@ -45,8 +52,20 @@ export class LogHours extends React.Component {
     let apiName = 'Volunteer_LogsCRUD';
     let path = '/Volunteer_Logs';
     console.log(this.state);
+    let mealList = "";
+    for (let i=0; i<this.state.numMeals; i++) {
+      mealList += this.state.meal[i][0] + "; ";
+    }
     let init = {
-      body: this.state
+      body: {
+        name: this.state.name,
+        date: this.state.date,
+        startTime: this.state.startTime,
+        endTime: this.state.endTime,
+        location: this.state.location,
+        meal: mealList,
+        cost: Number(this.state.cost)
+      }
     };
     API.post(apiName, path, init).then(response => {
       console.log(response);
@@ -55,13 +74,60 @@ export class LogHours extends React.Component {
     });
   }
 
+  addMeal = () => {
+    let numMeals = this.state.numMeals + 1;
+    this.setState({numMeals: numMeals});
+    let newMeal = this.state.meal;
+    newMeal.push(["","0"]);
+    this.setState({meal: newMeal});
+  }
+
+  createMealInputs = () =>  {
+    let output = [];
+    output.push(<label key={0}>Meal</label>);
+    for(let i=0; i<this.state.numMeals; i++) {
+      output.push(
+        <Select
+          key={i+1}
+          renderTitle={false}
+          value = {this.state.meal[i][0]}
+          title = "Meal"
+          update = { (event) => this.setMealAndCost(event, i)}
+          dropdown = {Object.keys(this.state.mealOptions)}
+        />
+      );
+    }
+    return output;
+  }
+
+  setMealAndCost(event, i) {
+    let newMeal = this.state.meal;
+    newMeal[i][0] = event.target.value;
+    if (this.state.mealOptions[event.target.value]) {
+      newMeal[i][1] = this.state.mealOptions[event.target.value];
+      let newCost = 0;
+      this.state.meal.forEach(el => {
+        newCost += Number(el[1]);
+      });
+      this.setState({cost: newCost.toString()});
+    }
+    this.setState({meal: newMeal});
+  }
+
   render() {
     let disabled = true;
+    let latestAddedMeal = this.state.meal[this.state.numMeals - 1][0];
     if (this.state.date && this.state.startTime && this.state.endTime &&
         this.state.location !== "Choose..." && this.state.location && 
-        this.state.meal !== "Choose..." && this.state.meal && this.state.cost) {
+        latestAddedMeal !== "Choose..." && latestAddedMeal && this.state.cost) {
       disabled = false;
     }
+
+    let addButton = true;
+    if (latestAddedMeal !== "Choose..." && latestAddedMeal !== "None" && latestAddedMeal !== "") {
+      addButton = false;
+    }
+
     return (
       <div>
         <Header title="Log Hours" link={() => this.props.history.push('/')}/>
@@ -72,8 +138,13 @@ export class LogHours extends React.Component {
               <Input value={this.state.startTime} title="Start time" type="time" update={(event) => this.setState({startTime: event.target.value})}/>
               <Input value={this.state.endTime} title="End time" type="time" update={(event) => this.setState({endTime: event.target.value})}/>
               <Select value={this.state.location} title="Location" update={(event) => this.setState({location: event.target.value})} dropdown={["Sprouts Cafe", "Option 2", "Option 3"]} />
-              <Select value={this.state.meal} title="Meal" update={(event) => this.setState({meal: event.target.value})} dropdown={["Sandwich", "Coffee", "Cookie", "None"]} />
-              <Input value={this.state.cost} title="Cost ($)" type="number" update={(event) => this.setState({cost: event.target.value})} />
+              {this.createMealInputs()}
+              <div className="d-block clearfix">
+                <button type="button" className="close btn btn-link" aria-label="Close" onClick={this.addMeal} disabled={addButton}>
+                  <span aria-hidden="true" className="text-success">&#43;</span>
+                </button>
+              </div>
+              <Input value={this.state.cost} title="Cost ($)" disabled={true} />
               <p>(Every field is required)</p>
               <Button title="Submit" color="btn-primary rounded-0 btn-block" onClick={this.handleSubmit.bind(this)} disabled={disabled} />
             </div>

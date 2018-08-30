@@ -8,9 +8,16 @@ export const Select = (props) => {
     options.push(<option key={(i+1)} value={dropdown[i]}>{dropdown[i]}</option>);
   }
 
+  let title;
+  if(props.renderTitle) {
+    title = <label>{props.title}</label>
+  } else {
+    title = <div/>
+  }
+
   return(
     <div className="form-group">
-      <label> {props.title} </label>
+      {title}
       <select value={props.value} className="form-control" onChange={props.update}>
         <option key="0" value="Choose...">Choose...</option>
         {options}
@@ -24,6 +31,10 @@ Select.propTypes = {
   value: PropTypes.string.isRequired,
   dropdown: PropTypes.arrayOf(PropTypes.string).isRequired,
   update: PropTypes.func.isRequired
+};
+
+Select.defaultProps = {
+  renderTitle: true
 };
 
 export default Select;
