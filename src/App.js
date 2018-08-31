@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 import { Auth } from 'aws-amplify';
-import { ConfirmSignIn, ForgotPassword, VerifyContact, withAuthenticator } from 'aws-amplify-react';
+import { ConfirmSignIn, withAuthenticator } from 'aws-amplify-react';
 import { MySignIn } from './components/authentication/MySignIn';
 import { MySignUp } from './components/authentication/MySignUp';
 import { MyConfirmSignUp } from './components/authentication/MyConfirmSignUp';
+import { MyForgotPassword } from './components/authentication/MyForgotPassword';
+import { MyVerifyContact } from './components/authentication/MyVerifyContact';
 import { RoutingTable } from './components/RoutingTable';
 
 class App extends Component {
@@ -37,8 +39,8 @@ class App extends Component {
 export default withAuthenticator(App, false, [
   <MySignIn/>,
   <ConfirmSignIn/>,
-  <VerifyContact/>,
+  <MyVerifyContact/>,
   <MySignUp/>,
   <MyConfirmSignUp/>,
-  <ForgotPassword/>
+  <MyForgotPassword/>
 ]);

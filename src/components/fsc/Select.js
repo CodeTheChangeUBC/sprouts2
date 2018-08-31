@@ -18,7 +18,7 @@ export const Select = (props) => {
   return(
     <div className="form-group">
       {title}
-      <select value={props.value} className="form-control" onChange={props.update}>
+      <select value={props.value} className="custom-select" onChange={props.update}>
         <option key="0" value="Choose...">Choose...</option>
         {options}
       </select>
