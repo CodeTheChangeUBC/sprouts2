@@ -23,6 +23,10 @@
   font-size: large;
 }
 
+.btn-primary {
+  background-color: #36b3a8 !important;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
