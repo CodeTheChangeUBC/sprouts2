@@ -138,7 +138,7 @@ export class LogHours extends React.Component {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-12 my-3">
-              <Input value={this.state.date} title="Date" type="date" disabled={true} update={(event) => this.setState({date: event.target.value})}/>
+              <Input value={this.state.date} title="Date" type="date" update={(event) => this.setState({date: event.target.value})}/>
               <Input value={this.state.startTime} title="Start time" type="time" update={(event) => this.setState({startTime: event.target.value})}/>
               <Input value={this.state.endTime} title="End time" type="time" update={(event) => this.setState({endTime: event.target.value})}/>
               <Select value={this.state.location} title="Location" update={(event) => this.setState({location: event.target.value})} dropdown={["Sprouts Cafe", "Option 2", "Option 3"]} />
