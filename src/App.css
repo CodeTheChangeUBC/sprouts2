@@ -25,6 +25,7 @@
 
 .btn-primary {
   background-color: #36b3a8 !important;
+  border-color: #36b3a8 !important;
 }
 
 @keyframes App-logo-spin {

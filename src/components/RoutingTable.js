@@ -43,7 +43,19 @@ export class RoutingTable extends Component {
           <div>
             <Route exact path="/" component={Options}/>
             <Route path="/logHours" component={LogHours}/>
-            <Route path="/shiftHistory" component={ShiftHistory}/>
+            <Route path="/shiftHistory" render={(props) => <ShiftHistory {...props} onSelectRow={this.handleSelectRow} />}/>
+            <Route path="/shiftDetails"
+            render = {
+                (props) => <ShiftDetails {...props}
+                  name = {this.state.name}
+                  date = {this.state.date}
+                  location = {this.state.location}
+                  startTime = {this.state.startTime}
+                  endTime = {this.state.endTime}
+                  meal = {this.state.meal}
+                  cost = {this.state.cost}
+                  backLink = "/shiftHistory"
+                />}/>
           </div>
         </Router>
       );
@@ -66,6 +78,7 @@ export class RoutingTable extends Component {
                   endTime = {this.state.endTime}
                   meal = {this.state.meal}
                   cost = {this.state.cost}
+                  backLink = "/viewLogs"
                 />}/>
           </div>
         </Router>
