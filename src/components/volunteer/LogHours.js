@@ -44,14 +44,14 @@ export class LogHours extends React.Component {
         Coffee: "3",
         Cookie: "1",
         None: "0"
-      }
+      },
+      errorMsg: ""
     };
   }
 
   handleSubmit() {
     let apiName = 'Volunteer_LogsCRUD';
     let path = '/Volunteer_Logs';
-    console.log(this.state);
     let mealList = "";
     for (let i=0; i<this.state.numMeals; i++) {
       mealList += this.state.meal[i][0] + "; ";
@@ -68,9 +68,13 @@ export class LogHours extends React.Component {
       }
     };
     API.post(apiName, path, init).then(response => {
-      console.log(response);
+      this.setState({
+        errorMsg: "Add successful!"
+      });
     }).catch(error => {
-      console.log(error.response)
+      this.setState({
+        errorMsg: "Something went wrong, please try again."
+      });
     });
   }
 
@@ -118,7 +122,7 @@ export class LogHours extends React.Component {
     let disabled = true;
     let latestAddedMeal = this.state.meal[this.state.numMeals - 1][0];
     if (this.state.date && this.state.startTime && this.state.endTime &&
-        this.state.location !== "Choose..." && this.state.location && 
+        this.state.location !== "Choose..." && this.state.location &&
         latestAddedMeal !== "Choose..." && latestAddedMeal && this.state.cost) {
       disabled = false;
     }
@@ -146,6 +150,7 @@ export class LogHours extends React.Component {
               </div>
               <Input value={this.state.cost} title="Cost ($)" disabled={true} />
               <p>(Every field is required)</p>
+              <p className={this.state.errorMsg === "Something went wrong, please try again." ? "text-danger" : "text-success"}>{this.state.errorMsg}</p>
               <Button title="Submit" color="btn-primary rounded-0 btn-block" onClick={this.handleSubmit.bind(this)} disabled={disabled} />
             </div>
           </div>
