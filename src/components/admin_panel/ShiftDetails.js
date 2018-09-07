@@ -44,7 +44,7 @@ export class ShiftDetails extends React.Component {
   // Render Add Meal dropdown
   createMealInputs = () =>  {
     let output = [];
-    output.push(<label key={0}></label>);
+    output.push();
     for(let i=0; i<this.state.numMeals; i++) {
       output.push(
         <Select
@@ -146,7 +146,7 @@ export class ShiftDetails extends React.Component {
       API.put(apiName, path, init).then(response => {
         console.log(response);
         alert("Entry Updated");
-        this.props.history.push('/viewLogs');
+        this.props.history.push(this.props.backLink);
       }).catch(error => {
         console.log(error.response)
       });
@@ -161,7 +161,7 @@ export class ShiftDetails extends React.Component {
 
     return (
       <div>
-        <Header title="Shift Details" link={() => this.props.history.push('/viewLogs')}/>
+        <Header title="Shift Details" link={() => this.props.history.push(this.props.backLink)}/>
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-12 my-3">

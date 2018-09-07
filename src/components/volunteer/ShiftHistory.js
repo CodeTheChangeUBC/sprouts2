@@ -10,10 +10,16 @@ export class ShiftHistory extends React.Component {
     super(props);
 
     this.state = {
-      tableData: []
+      tableData: [],
+      apiData: undefined
     };
 
     this.getTableData();
+  }
+
+  selectRow = (el) => {
+    this.props.onSelectRow(this.state.apiData[el]);
+    this.props.history.push('/shiftDetails');
   }
 
   getTableData() {
@@ -23,7 +29,8 @@ export class ShiftHistory extends React.Component {
         let path = '/Volunteer_Logs/' + session.accessToken.payload.username;
 
         API.get(apiName, path).then(response => {
-          this.parseTableData(response);
+          this.setState({apiData: response.reverse()});
+          this.parseTableData();
         }).catch(error => {
           console.log(error.response);
         });
@@ -31,8 +38,9 @@ export class ShiftHistory extends React.Component {
       .catch(err => console.log(err));
   }
 
-  parseTableData(apiData) {
+  parseTableData = () => {
     let tableData = [];
+    let apiData = this.state.apiData;
 
     apiData.forEach(el => {
       let row = {col1: el.name, col2: el.date, col3: el.location};
@@ -54,6 +62,7 @@ export class ShiftHistory extends React.Component {
                 col2="Date"
                 col3="Location"
                 data={this.state.tableData}
+                select={this.selectRow}
               />
             </div>
           </div>

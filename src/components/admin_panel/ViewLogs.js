@@ -36,7 +36,7 @@ export class ViewLogs extends React.Component {
     let path = '/Volunteer_Logs';
 
     API.get(apiName, path).then(response => {
-      this.setState({apiData: response.data.reverse()})
+      this.setState({apiData: response.data.reverse()});
       this.parseTableData();
     }).catch(error => {
       console.log(error.response);
