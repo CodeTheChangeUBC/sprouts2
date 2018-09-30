@@ -68,10 +68,12 @@ export class LogHours extends React.Component {
       }
     };
     API.post(apiName, path, init).then(response => {
-      this.setState({
-        errorMsg: "Add successful!"
-      });
-    }).catch(error => {
+      // this.setState({
+      //   errorMsg: "Add successful!"
+      // });
+      alert("Shift logged successfully!");
+      this.props.history.push('/')
+        }).catch(error => {
       this.setState({
         errorMsg: "Something went wrong, please try again."
       });

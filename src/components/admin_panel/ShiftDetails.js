@@ -35,6 +35,7 @@ export class ShiftDetails extends React.Component {
     this.createLocationInputs = this.createLocationInputs.bind(this);
     this.setMealAndCost = this.setMealAndCost.bind(this);
     this.handleChangeLocation = this.handleChangeLocation.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   getDefaultState() {
@@ -110,7 +111,7 @@ export class ShiftDetails extends React.Component {
   updated() {
     if (this.state.mealUpdate[0][0].length !== 0 &&
       this.state.mealUpdate[0][0]!=="None") {
-      return true;
+      return true;  
     }
     if ((this.state.startTime !== this.props.startTime) || 
         (this.state.endTime !== this.props.endTime) ||
@@ -120,6 +121,24 @@ export class ShiftDetails extends React.Component {
     return false;
   }
 
+  // Delete database entry
+  handleDelete(event) {
+    let con = window.confirm("Are you sure you want to delete this entry?");
+    alert(con);
+    if (con) {
+      let apiName = 'Volunteer_LogsCRUD';
+      let path = '/Volunteer_Logs/object/';
+      path += this.state.name + "/" + this.state.date;
+      API.del (apiName, path).then(response => {
+        console.log(response);
+        alert("Entry Deleted");
+        this.props.history.push(this.props.backLink);
+      }).catch(error => {
+        console.log(error.response);
+      })
+  
+    }
+  }
   // Update database entry
   handleSubmit(event) {
     let apiName = 'Volunteer_LogsCRUD';
@@ -190,6 +209,7 @@ export class ShiftDetails extends React.Component {
                       color="btn-primary rounded-0 btn-block" 
                       onClick={(event) => this.setState({edit: !this.state.edit})}/>
               <Button title="Save" color="btn-secondary rounded-0 btn-block" onClick={this.handleSubmit} />
+              <Button title="Delete" color="btn-danger rounded-0 btn-block" onClick={this.handleDelete} />
             </div>
           </div>
         </div>
