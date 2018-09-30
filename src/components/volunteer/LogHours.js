@@ -52,10 +52,16 @@ export class LogHours extends React.Component {
   handleSubmit() {
     let apiName = 'Volunteer_LogsCRUD';
     let path = '/Volunteer_Logs';
-    let mealList = "";
+    let mealList = [];
+    // let mealList = "";
+    // for (let i=0; i<this.state.numMeals; i++) {
+    //   mealList += this.state.meal[i][0] + "; ";
+    // }
     for (let i=0; i<this.state.numMeals; i++) {
-      mealList += this.state.meal[i][0] + "; ";
+      mealList[i]=(this.state.meal[i][0]);
     }
+    console.log(this.state.meal);
+    console.log(mealList);
     let init = {
       body: {
         name: this.state.name,
@@ -68,9 +74,6 @@ export class LogHours extends React.Component {
       }
     };
     API.post(apiName, path, init).then(response => {
-      // this.setState({
-      //   errorMsg: "Add successful!"
-      // });
       alert("Shift logged successfully!");
       this.props.history.push('/')
         }).catch(error => {

@@ -143,12 +143,16 @@ export class ShiftDetails extends React.Component {
   handleSubmit(event) {
     let apiName = 'Volunteer_LogsCRUD';
     let path = '/Volunteer_Logs';
-    let mealList=this.state.meal;
+    let mealList = [];
 
     if (this.updated()) {
       alert("Changes made");
       for (let i=0; i<this.state.numMeals; i++) {
-        mealList += this.state.mealUpdate[i][0] + ";";
+        mealList[i]=(this.state.meal[i]);
+      }
+      for (let x=0; x< this.state.meal.length; x++) {
+        console.log(this.state.meal[x]);
+        mealList.push(this.state.meal[x]);
       }
 
       let init = {
@@ -171,6 +175,7 @@ export class ShiftDetails extends React.Component {
       });
 
     } else {
+      console.log("no changes ")
       alert("No changes made");
     }
   }
