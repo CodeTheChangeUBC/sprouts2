@@ -10,6 +10,7 @@ export class LogHours extends React.Component {
   constructor(props) {
     super(props);
     this.state = this.getDefaultState();
+    this.removeMeal = this.removeMeal.bind(this);
   }
 
   componentDidMount() {
@@ -91,19 +92,42 @@ export class LogHours extends React.Component {
     this.setState({meal: newMeal});
   }
 
+  // Remove a meal input
+  removeMeal (meal) {
+    let newMeal = this.state.meal;
+    let x = newMeal.indexOf(meal);
+    newMeal.splice(x,1);
+    this.setState({meal: newMeal});
+
+    let num =this.state.numMeals-1;
+    this.setState({numMeals: num});
+
+    let newCost = this.state.cost -meal[1];
+    this.setState({cost: newCost});
+  }
+
+  //TODO - Please style the remove button
   createMealInputs = () =>  {
     let output = [];
     output.push(<label key={0}>Meal</label>);
     for(let i=0; i<this.state.numMeals; i++) {
       output.push(
-        <Select
-          key={i+1}
-          renderTitle={false}
-          value = {this.state.meal[i][0]}
-          title = "Meal"
-          update = { (event) => this.setMealAndCost(event, i)}
-          dropdown = {Object.keys(this.state.mealOptions)}
-        />
+        <div>
+          <Select
+            key={i+1}
+            renderTitle={false}
+            value = {this.state.meal[i][0]}
+            title = "Meal"
+            update = { (event) => this.setMealAndCost(event, i)}
+            dropdown = {Object.keys(this.state.mealOptions)}/>
+          <div className="d-block">
+          <button type="button" className="close btn btn-link" aria-label="Close" 
+            onClick={ (event) => this.removeMeal(this.state.meal[i])} 
+            hidden={(this.state.numMeals>1)? false :true}>
+            <span aria-hidden="true" className="text-danger">&#8212;</span>
+          </button>
+          </div>
+        </div>
       );
     }
     return output;
@@ -114,12 +138,16 @@ export class LogHours extends React.Component {
     newMeal[i][0] = event.target.value;
     if (this.state.mealOptions[event.target.value]) {
       newMeal[i][1] = this.state.mealOptions[event.target.value];
-      let newCost = 0;
+    } 
+    else  {
+      alert("Meal changed to Choose");
+      newMeal[i][1] = 0;
+    }
+    let newCost = 0;
       this.state.meal.forEach(el => {
         newCost += Number(el[1]);
       });
       this.setState({cost: newCost.toString()});
-    }
     this.setState({meal: newMeal});
   }
 

@@ -36,6 +36,7 @@ export class ShiftDetails extends React.Component {
     this.setMealAndCost = this.setMealAndCost.bind(this);
     this.handleChangeLocation = this.handleChangeLocation.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
+    this.handleEdit = this.handleEdit.bind(this);
   }
 
   getDefaultState() {
@@ -89,7 +90,7 @@ export class ShiftDetails extends React.Component {
     newMeal[i][0] = event.target.value;
     if (this.state.mealOptions[event.target.value]) {
       newMeal[i][1] = this.state.mealOptions[event.target.value];
-      let newCost = this.props.cost;
+      let newCost = Number(this.props.cost);
       this.state.mealUpdate.forEach(el => {
         newCost += Number(el[1]);
       });
@@ -139,6 +140,15 @@ export class ShiftDetails extends React.Component {
   
     }
   }
+
+  handleEdit(event) {
+    this.setState({edit: !this.state.edit});
+    this.setState({meal: this.props.meal});
+    this.setState({cost: this.props.cost});
+    this.setState({location: this.props.location});
+    this.setState({startTime: this.props.startTime});
+    this.setState({endTime: this.props.endTime});
+  };
   // Update database entry
   handleSubmit(event) {
     let apiName = 'Volunteer_LogsCRUD';
@@ -212,7 +222,7 @@ export class ShiftDetails extends React.Component {
               <Input value={`${this.state.cost}`} title="Cost ($)" type="number" disabled={true}/>
               <Button title={(this.state.edit)? "Cancel" : "Edit"} 
                       color="btn-primary rounded-0 btn-block" 
-                      onClick={(event) => this.setState({edit: !this.state.edit})}/>
+                      onClick={this.handleEdit}/>
               <Button title="Save" color="btn-secondary rounded-0 btn-block" onClick={this.handleSubmit} />
               <Button title="Delete" color="btn-danger rounded-0 btn-block" onClick={this.handleDelete} />
             </div>
