@@ -45,12 +45,12 @@ export class ShiftDetails extends React.Component {
   removeMeal (meal) {
     let newMeal = this.state.meal;
     let x = newMeal.indexOf(meal);
-    if (x >= 0) {
+    if (x >= 0 && this.state.num>1) {
       newMeal.splice(x,1);
       this.setState({meal: newMeal});
   
-      let num =this.state.numMeals-1;
-      this.setState({numMeals: num});
+      let num =this.state.num-1;
+      this.setState({num: num});
   
       let newCost = this.state.cost -meal[1];
       this.setState({cost: newCost});
@@ -78,7 +78,6 @@ export class ShiftDetails extends React.Component {
           <h6>Meal</h6>
         </div>
       )
-      console.log(this.state.num);
       for(let i=0; i<this.state.num; i++) {
         output.push(
           <div>
@@ -258,12 +257,14 @@ export class ShiftDetails extends React.Component {
 
   render = (props) => {
     let addButton = true;
-    if (this.state.num>=1) {
+    if (this.state.num >= 1) {
       let latestAddedMeal = this.state.meal[this.state.num - 1][0];
-    if (latestAddedMeal !== "Choose..." && latestAddedMeal !== "None" && latestAddedMeal !== "") {
-      addButton = false;
+      if (latestAddedMeal !== "Choose..." && latestAddedMeal !== "None" && latestAddedMeal !== "") {
+        addButton = false;
+      
+      }
     }
-    }
+
     return (
       <div>
         <Header title="Shift Details" link={() => this.props.history.push(this.props.backLink)}/>
