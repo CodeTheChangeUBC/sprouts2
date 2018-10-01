@@ -11,6 +11,7 @@ export class LogHours extends React.Component {
     super(props);
     this.state = this.getDefaultState();
     this.removeMeal = this.removeMeal.bind(this);
+    this.isValid = this.isValid.bind(this);
   }
 
   componentDidMount() {
@@ -27,9 +28,16 @@ export class LogHours extends React.Component {
     let day = d.getDate();
     let hour = d.getHours();
     let minute = d.getMinutes();
+    let endHour = hour;
+    let endMinute = minute+15;
     let date = d.getFullYear() + '-' + (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day;
     let startTime = (hour < 10 ? '0' : '') + hour + ':' + (minute < 10 ? '0' : '') + minute;
-    let endTime = (hour < 10 ? '0' : '') + hour + ':' + (minute < 10 ? '0' : '') + minute;
+    if (minute>=45) {
+      endHour+=1;
+      endMinute=endMinute - 60;
+    }
+    let endTime = (endHour < 10 ? '0' : '') + endHour + ':' + (endMinute < 10 ? '0' : '') + endMinute;
+    
 
     return {
       name: "",
@@ -50,20 +58,30 @@ export class LogHours extends React.Component {
     };
   }
 
+  isValid() {
+    if (!this.state.date) {
+      alert("Please select a valid date.");
+      return false;
+    }
+    if (!(this.state.startTime && this.state.endTime &&
+      (this.state.endTime > this.state.startTime))) {
+        alert("Please select a valid start and end time.");
+        return false;
+    }
+    if (!this.state.location || this.state.location === "Choose...") {
+      alert("Please select a location from the dropdown menu.");
+      return false;
+    }
+    console.log(this.state.meal);
+    if (!(this.state.meal[0][0]) || (this.state.meal[0][0] ==="Choose...")) {
+      alert("Please select a meal option from the dropdown menu");
+      return false;
+    }
+    else {return true;}
+  }
   handleSubmit() {
     let apiName = 'Volunteer_LogsCRUD';
     let path = '/Volunteer_Logs';
-    let mealList = [];
-    for (let i=0; i<this.state.numMeals; i++) {
-      mealList[i]=(this.state.meal[i][0]);
-    }
-    // let mealList = "";
-    // for (let i=0; i<this.state.numMeals; i++) {
-    //   mealList += this.state.meal[i][0] + "; ";
-    // }
-    
-    console.log(this.state.meal);
-    console.log(mealList);
     let init = {
       body: {
         name: this.state.name,
@@ -75,6 +93,7 @@ export class LogHours extends React.Component {
         cost: Number(this.state.cost)
       }
     };
+    if (this.isValid()) {
     API.post(apiName, path, init).then(response => {
       alert("Shift logged successfully!");
       this.props.history.push('/')
@@ -83,6 +102,7 @@ export class LogHours extends React.Component {
         errorMsg: "Something went wrong, please try again."
       });
     });
+  }
   }
 
   addMeal = () => {
@@ -97,14 +117,19 @@ export class LogHours extends React.Component {
   removeMeal (meal) {
     let newMeal = this.state.meal;
     let x = newMeal.indexOf(meal);
-    newMeal.splice(x,1);
-    this.setState({meal: newMeal});
+    console.log("x is " + x);
+    if (x >= 0 && this.state.numMeals>1) {
+      console.log("x is " + x);
 
-    let num =this.state.numMeals-1;
-    this.setState({numMeals: num});
-
-    let newCost = this.state.cost -meal[1];
-    this.setState({cost: newCost});
+      newMeal.splice(x,1);
+      this.setState({meal: newMeal});
+  
+      let num =this.state.numMeals-1;
+      this.setState({numMeals: num});
+  
+      let newCost = this.state.cost -meal[1];
+      this.setState({cost: newCost});
+    }
   }
 
   //TODO - Please style the remove button
@@ -141,8 +166,13 @@ export class LogHours extends React.Component {
       newMeal[i][1] = this.state.mealOptions[event.target.value];
     } 
     else  {
-      alert("Meal changed to Choose");
       newMeal[i][1] = 0;
+      console.log(newMeal[i][0]);
+      if (this.state.numMeals > 1) {
+        newMeal.splice(i,1);
+        let num =this.state.numMeals-1;
+        this.setState({numMeals: num});
+      }
     }
     let newCost = 0;
       this.state.meal.forEach(el => {
@@ -153,15 +183,17 @@ export class LogHours extends React.Component {
   }
 
   render() {
-    let disabled = true;
-    let latestAddedMeal = this.state.meal[this.state.numMeals - 1][0];
-    if (this.state.date && this.state.startTime && this.state.endTime &&
-        this.state.location !== "Choose..." && this.state.location &&
-        latestAddedMeal !== "Choose..." && latestAddedMeal && this.state.cost) {
-      disabled = false;
-    }
-
+    let disabled = false;
     let addButton = true;
+    
+
+    let latestAddedMeal = this.state.meal[this.state.numMeals - 1][0];
+    // if (this.state.date && this.state.startTime && this.state.endTime &&
+    //     this.state.location !== "Choose..." && this.state.location &&
+    //     latestAddedMeal !== "Choose..." && latestAddedMeal && this.state.cost &&
+    //     (this.state.endTime > this.state.startTime)) {
+    //   disabled = false;
+    // }
     if (latestAddedMeal !== "Choose..." && latestAddedMeal !== "None" && latestAddedMeal !== "") {
       addButton = false;
     }

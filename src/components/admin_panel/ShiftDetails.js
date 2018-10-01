@@ -45,22 +45,28 @@ export class ShiftDetails extends React.Component {
   removeMeal (meal) {
     let newMeal = this.state.meal;
     let x = newMeal.indexOf(meal);
-    newMeal.splice(x,1);
-    this.setState({meal: newMeal});
-
-    let num =this.state.num-1;
-    this.setState({num: num});
-
-    let newCost = this.state.cost-meal[1];
-    this.setState({cost: newCost});
+    if (x >= 0) {
+      newMeal.splice(x,1);
+      this.setState({meal: newMeal});
+  
+      let num =this.state.numMeals-1;
+      this.setState({numMeals: num});
+  
+      let newCost = this.state.cost -meal[1];
+      this.setState({cost: newCost});
+    }
   }
 
   // Render Add Meal dropdown
   createMealInputs () {
+    let mealList =[];
     if (!this.state.edit) {
+      for(let i=0; i<this.state.meal.length; i++) {
+        mealList.push(this.state.meal[i][0]);
+      }
     return ( 
         <Input title="Meal" renderTitle={true} 
-                value={this.state.meal}
+                value={mealList}
                 disabled={true}/>
       );
      }
@@ -129,6 +135,11 @@ export class ShiftDetails extends React.Component {
     else  {
       //alert("Meal changed to Choose");
       newMeal[i][1] = 0;
+      if (this.state.num > 1) {
+        newMeal.splice(i,1);
+        let num =this.state.num-1;
+        this.setState({num: num});
+      }
     }
     let newCost = Number(0);
       this.state.meal.forEach(el => {
@@ -158,11 +169,18 @@ export class ShiftDetails extends React.Component {
         (this.state.location !== this.props.location)) {
       updated=true;
     }
+    
     console.log(updated);
     for (let i=0; i<this.state.num; i++) {
       if (!(this.state.meal[i][0]==="Choose...")) {
         valid=true;
       }
+    }
+    if (this.state.endTime <= this.state.startTime) {
+      valid=false;
+    }
+    if (this.state.location === "Choose...") { 
+      valid=false;
     }
     console.log(valid);
     return (updated && valid);
@@ -220,9 +238,16 @@ export class ShiftDetails extends React.Component {
       });
 
     } else {
-      console.log("no changes ")
-      if(this.state.edit) {      
-        alert("Please select a meal from the dropdown menu.");
+      if(this.state.edit) {     
+        if (this.state.location === "Choose...") {
+          alert("Please select a location from the dropdown menu.");
+        } 
+        else if (this.state.endTime <= this.state.startTime) {
+          alert("Please select a valid start and end time.");
+        }
+        else {
+          alert("Please select a meal from the dropdown menu.");
+        }
       }
       else {
         alert("No changes made: Select edit to make changes.");
@@ -232,7 +257,13 @@ export class ShiftDetails extends React.Component {
 
 
   render = (props) => {
-
+    let addButton = true;
+    if (this.state.num>=1) {
+      let latestAddedMeal = this.state.meal[this.state.num - 1][0];
+    if (latestAddedMeal !== "Choose..." && latestAddedMeal !== "None" && latestAddedMeal !== "") {
+      addButton = false;
+    }
+    }
     return (
       <div>
         <Header title="Shift Details" link={() => this.props.history.push(this.props.backLink)}/>
@@ -255,7 +286,7 @@ export class ShiftDetails extends React.Component {
               {/* <Input value={this.state.meal} title="Meal" disabled={true} /> */}
               {this.createMealInputs()}
               <div className="d-block clearfix">
-                <button type="button" className="close btn btn-link" aria-label="Close" onClick={this.addMeal} hidden={(this.state.edit)? false : true}>
+                <button type="button" className="close btn btn-link" aria-label="Close" onClick={this.addMeal} disabled={addButton} hidden={(this.state.edit)? false : true}>
                   <span aria-hidden="true" className="text-success">&#43;</span>
                 </button>
               </div>
