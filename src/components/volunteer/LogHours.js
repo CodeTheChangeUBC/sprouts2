@@ -54,13 +54,14 @@ export class LogHours extends React.Component {
     let apiName = 'Volunteer_LogsCRUD';
     let path = '/Volunteer_Logs';
     let mealList = [];
+    for (let i=0; i<this.state.numMeals; i++) {
+      mealList[i]=(this.state.meal[i][0]);
+    }
     // let mealList = "";
     // for (let i=0; i<this.state.numMeals; i++) {
     //   mealList += this.state.meal[i][0] + "; ";
     // }
-    for (let i=0; i<this.state.numMeals; i++) {
-      mealList[i]=(this.state.meal[i][0]);
-    }
+    
     console.log(this.state.meal);
     console.log(mealList);
     let init = {
@@ -70,7 +71,7 @@ export class LogHours extends React.Component {
         startTime: this.state.startTime,
         endTime: this.state.endTime,
         location: this.state.location,
-        meal: mealList,
+        meal: this.state.meal,
         cost: Number(this.state.cost)
       }
     };
