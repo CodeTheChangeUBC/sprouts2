@@ -80,21 +80,24 @@ export class ShiftDetails extends React.Component {
       )
       for(let i=0; i<this.state.num; i++) {
         output.push(
-          <div>
-            <Select
-              key={i+1}
-              renderTitle={false}
-              value = {this.state.meal[i][0]}
-              title = "Meal"
-              update = { (event) => this.setMealAndCost(event, i)}
-              dropdown = {Object.keys(this.state.mealOptions)}/>
-            <div className="d-block">
-            <button type="button" className="close btn btn-link" aria-label="Close" 
-              onClick={ (event) => this.removeMeal(this.state.meal[i])} 
-              hidden={(this.state.num>1 && this.state.edit)? false :true}>
-              <span aria-hidden="true" className="text-danger">&#8212;</span>
-            </button>
+          <div className="row">
+            <div className={(this.state.num>1 && this.state.edit)? "col-8 col-sm-9 col-md-10" : "col-12"}>
+              <Select
+                key={i+1}
+                renderTitle={false}
+                value = {this.state.meal[i][0]}
+                title = "Meal"
+                update = { (event) => this.setMealAndCost(event, i)}
+                dropdown = {Object.keys(this.state.mealOptions)}/>
             </div>
+            {(this.state.num>1 && this.state.edit)? (
+                <div className="col-4 col-sm-3 col-md-2 pl-0 mb-3 text-right">
+                  <button type="button" className="btn btn-outline-danger" aria-label="Close" onClick={ (event) => this.removeMeal(this.state.meal[i])}>
+                    Remove
+                  </button>
+                </div>
+              ) : ""
+            }
           </div>
         );
       }
@@ -286,9 +289,9 @@ export class ShiftDetails extends React.Component {
                     disabled={(this.state.edit)? "" : "disabled"}/>
               {/* <Input value={this.state.meal} title="Meal" disabled={true} /> */}
               {this.createMealInputs()}
-              <div className="d-block clearfix">
-                <button type="button" className="close btn btn-link" aria-label="Close" onClick={this.addMeal} disabled={addButton} hidden={(this.state.edit)? false : true}>
-                  <span aria-hidden="true" className="text-success">&#43;</span>
+              <div className="clearfix d-flex justify-content-start pb-3">
+                <button type="button" className="btn btn-outline-success" aria-label="Close" onClick={this.addMeal} disabled={addButton} hidden={(this.state.edit)? false : true}>
+                  Add Meal Item
                 </button>
               </div>
               <Input value={`${this.state.cost}`} title="Cost ($)" type="number" disabled={true}/>
