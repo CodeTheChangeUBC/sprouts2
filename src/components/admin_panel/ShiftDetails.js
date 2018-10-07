@@ -73,16 +73,15 @@ export class ShiftDetails extends React.Component {
      else {
       let output = [];
       output.push(
-        <div key="-1"> 
+        <div key={0}> 
           <h6>Meal</h6>
         </div>
       )
       for(let i=0; i<this.state.num; i++) {
         output.push(
-          <div key={i} className="row">
+          <div key={i+1} className="row">
             <div className={(this.state.num>1 && this.state.edit)? "col-8 col-sm-9 col-md-10" : "col-12"}>
               <Select
-                key={i+1}
                 renderTitle={false}
                 value = {this.state.meal[i][0]}
                 title = "Meal"
