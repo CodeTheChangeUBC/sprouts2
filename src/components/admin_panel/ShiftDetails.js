@@ -66,21 +66,20 @@ export class ShiftDetails extends React.Component {
       }
     return ( 
         <Input title="Meal" renderTitle={true} 
-                value={mealList}
+                value={mealList.toString()}
                 disabled={true}/>
       );
      }
      else {
       let output = [];
-      output.push();
       output.push(
-        <div> 
+        <div key="-1"> 
           <h6>Meal</h6>
         </div>
       )
       for(let i=0; i<this.state.num; i++) {
         output.push(
-          <div className="row">
+          <div key={i} className="row">
             <div className={(this.state.num>1 && this.state.edit)? "col-8 col-sm-9 col-md-10" : "col-12"}>
               <Select
                 key={i+1}
@@ -276,17 +275,17 @@ export class ShiftDetails extends React.Component {
             <div className="col-12 my-3">
               <Input value={this.state.name} title="User" 
                     update={(event) => this.setState({name: event.target.value})} 
-                    disabled={"disabled"}/>
+                    disabled={true}/>
               <Input value={this.state.date} title="Date" type="date" 
                     update={(event) => this.setState({date: event.target.value})} 
-                    disabled={"disabled"}/>
+                    disabled={true}/>
               {this.createLocationInputs()}
               <Input value={this.state.startTime} title="Start time" type="time" 
                     update={(event) => this.setState({startTime: event.target.value})}
-                    disabled={(this.state.edit)? "" : "disabled"}/>
+                    disabled={(this.state.edit)? false : true}/>
               <Input value={this.state.endTime} title="End time" type="time" 
                     update={(event) => this.setState({endTime: event.target.value})}
-                    disabled={(this.state.edit)? "" : "disabled"}/>
+                    disabled={(this.state.edit)? false : true}/>
               {/* <Input value={this.state.meal} title="Meal" disabled={true} /> */}
               {this.createMealInputs()}
               <div className="clearfix d-flex justify-content-start pb-3">
