@@ -38,9 +38,6 @@ export class ShiftDetails extends React.Component {
     this.handleEdit = this.handleEdit.bind(this);
     this.removeMeal = this.removeMeal.bind(this);
   }
-  getDefaultState() {
-    
-  }
 
   removeMeal (meal) {
     let newMeal = this.state.meal;
@@ -206,7 +203,7 @@ export class ShiftDetails extends React.Component {
 
   handleEdit() {
     if (this.state.edit) {
-      this.props.history.push('/shiftHistory');
+      this.props.history.push(this.props.backLink);
     }
     this.setState({edit: !this.state.edit});
   };
@@ -217,7 +214,6 @@ export class ShiftDetails extends React.Component {
     let path = '/Volunteer_Logs';
 
     if (this.updated()) {
-      alert("Changes made");
       let init = {
         body: {
           name: this.state.name,

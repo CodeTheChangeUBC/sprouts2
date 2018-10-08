@@ -19,7 +19,7 @@ export const Select = (props) => {
     <div className="form-group">
       {title}
       <select value={props.value} className="custom-select" onChange={props.update}>
-        <option key="0" value="Choose...">Choose...</option>
+        <option key="0" value={props.default}>{props.default}</option>
         {options}
       </select>
     </div>
@@ -30,11 +30,13 @@ Select.propTypes = {
   title: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   dropdown: PropTypes.arrayOf(PropTypes.string).isRequired,
-  update: PropTypes.func.isRequired
+  update: PropTypes.func.isRequired,
+  default: PropTypes.string
 };
 
 Select.defaultProps = {
-  renderTitle: true
+  renderTitle: true,
+  default: "Choose..."
 };
 
 export default Select;

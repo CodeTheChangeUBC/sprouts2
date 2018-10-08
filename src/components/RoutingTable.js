@@ -67,6 +67,7 @@ export class RoutingTable extends Component {
           <div>
             <Route exact path="/" component={AdminOptions}/>
             <Route path="/manageVolunteers" component={ManageVolunteers}/>
+            <Route path="/logHours" component={LogHours}/>
             <Route path="/viewLogs" render={(props) => <ViewLogs {...props} onSelectRow={this.handleSelectRow} />}/>
             <Route path="/shiftDetails" 
             render = {
