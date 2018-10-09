@@ -14,7 +14,10 @@ NPM version: 6.4.0
 
 ```bash
 $> npm install -g awsmobile-cli
-$> awsmobile configure // need credentials from CTC 
+# configure awsmobile (need credentials from CTC)
+$> awsmobile configure
+# initialize awsmobile project (need project id from CTC)
+$> awsmobile init <project-id>
 ```
 
 ### Install NPM packages
