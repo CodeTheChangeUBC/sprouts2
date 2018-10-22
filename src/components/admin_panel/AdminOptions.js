@@ -21,6 +21,7 @@ export class AdminOptions extends React.Component {
               {/* <Button title="Manage Volunteers" color="btn-danger rounded-0 btn-block" onClick={() => this.props.history.push('/manageVolunteers')} /> */}
               <Button title="Log Hours" color="btn-danger rounded-0 btn-block" onClick={() => this.props.history.push('/logHours')} />
               <Button title="View Logs" color="btn-danger rounded-0 btn-block" onClick={() => this.props.history.push('/viewLogs')} />
+              <Button title="Modify Meal Options" color="btn-danger rounded-0 btn-block" onClick={() => this.props.history.push('/modifyMeals')} />
               <Button title={I18n.get('Sign Out')} color="btn-primary rounded-0 btn-block" onClick={this.signOut} />
             </div>
           </div>

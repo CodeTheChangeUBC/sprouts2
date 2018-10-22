@@ -4,38 +4,70 @@ apps:
 features:
   cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic 
     components:
+      Meal_OptionsCRUD: !com.amazonaws.mobilehub.v0.API 
+        attributes:
+          name: Meal_OptionsCRUD
+          requires-signin: false
+          sdk-generation-stage-name: Development
+        paths:
+          /Meal_Options: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/MealOptions-20181022125608.zip
+            description: 'Handler for calls to resource path : /Meal_Options/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: PTtAB1yHbXt3Dd7CEYXrlaydC8UrWE6xSm3TPPrWLDU=
+            memorySize: '128'
+            modified: '2018-10-22T19:57:33.852+0000'
+            name: MealOptions
+            runtime: nodejs6.10
+            timeout: '3'
+            version: V2fD8yiVTahEIahput6LIEZSUWTN46m9
+          '/Meal_Options/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/MealOptions-20181022125608.zip
+            description: 'Handler for calls to resource path : /Meal_Options/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: PTtAB1yHbXt3Dd7CEYXrlaydC8UrWE6xSm3TPPrWLDU=
+            memorySize: '128'
+            modified: '2018-10-22T19:57:33.852+0000'
+            name: MealOptions
+            runtime: nodejs6.10
+            timeout: '3'
+            version: Gojnn2dR_FpAA1K2axuAmhIOSwFP35nR
       Volunteer_LogsCRUD: !com.amazonaws.mobilehub.v0.API 
         attributes:
           name: Volunteer_LogsCRUD
-          requires-signin: true
+          requires-signin: false
           sdk-generation-stage-name: Development
         paths:
           /Volunteer_Logs: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/VolunteerLogs-20180901054958.zip
+            codeFilename: uploads/VolunteerLogs-20181022103404.zip
             description: 'Handler for calls to resource path : /Volunteer_Logs/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: mwTWwaZHsBsyiMefYDsKiEB4FVPNW+QJ9Ef1L38562w=
+            hashcode: e0DmLwZ19e82NvTaX/oRlWR+GOIzOajJFIRUy8TJ28o=
             memorySize: '128'
-            modified: '2018-09-01T05:50:31.718+0000'
+            modified: '2018-10-22T17:35:06.707+0000'
             name: VolunteerLogs
             runtime: nodejs6.10
             timeout: '3'
-            version: PTeBLrdBLmmcJUZoHtmmRoQZ6LrIekus
+            version: Und1oVESln4O3ngmjpPDf3O0hy4t7jaA
           '/Volunteer_Logs/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/VolunteerLogs-20180901054958.zip
+            codeFilename: uploads/VolunteerLogs-20181022103404.zip
             description: 'Handler for calls to resource path : /Volunteer_Logs/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: mwTWwaZHsBsyiMefYDsKiEB4FVPNW+QJ9Ef1L38562w=
+            hashcode: e0DmLwZ19e82NvTaX/oRlWR+GOIzOajJFIRUy8TJ28o=
             memorySize: '128'
-            modified: '2018-09-01T05:50:31.718+0000'
+            modified: '2018-10-22T17:35:06.707+0000'
             name: VolunteerLogs
             runtime: nodejs6.10
             timeout: '3'
-            version: fFSIpNpcO7Gkcg3OUgjiECMj38pObdjP
+            version: Und1oVESln4O3ngmjpPDf3O0hy4t7jaA
       sampleCloudApi: !com.amazonaws.mobilehub.v0.API 
         attributes:
           name: sampleCloudApi
@@ -43,31 +75,31 @@ features:
           sdk-generation-stage-name: Development
         paths:
           /items: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/sampleLambda-20180901054523.zip
+            codeFilename: uploads/sampleLambda-20181022125608.zip
             description: 'Handler for calls to resource path : /items/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: BHFJHf9AN4wBw/STWPcrmunY5nDhlZdmMuIvGTt+3G4=
+            hashcode: QqNANPWBFx/A1+NNAGomaciDY4UBxCyl8bus6ARk2GI=
             memorySize: '128'
-            modified: '2018-09-01T05:50:37.054+0000'
+            modified: '2018-10-22T19:57:34.202+0000'
             name: sampleLambda
             runtime: nodejs6.10
             timeout: '3'
-            version: IZFgc8jbh8HxGSK49LvUJNeDOv9Yi7JM
+            version: UcouqS7thsRt3DLD44nDDCZkbVs5p0zn
           '/items/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/sampleLambda-20180901054523.zip
+            codeFilename: uploads/sampleLambda-20181022125608.zip
             description: 'Handler for calls to resource path : /items/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: BHFJHf9AN4wBw/STWPcrmunY5nDhlZdmMuIvGTt+3G4=
+            hashcode: QqNANPWBFx/A1+NNAGomaciDY4UBxCyl8bus6ARk2GI=
             memorySize: '128'
-            modified: '2018-09-01T05:50:37.054+0000'
+            modified: '2018-10-22T19:57:34.202+0000'
             name: sampleLambda
             runtime: nodejs6.10
             timeout: '3'
-            version: RnhPDr7_FwFb0ZQzcEdNhcQ5RjPn.isK
+            version: DB4auqO7.yrlrSda0.9HvFiPwkxW9dRn
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
@@ -112,6 +144,16 @@ features:
             rangeKeyName: date
             rangeKeyType: S
             tableName: ___DYNAMIC_PREFIX___-Volunteer_Logs
+            tablePrivacy: public
+          - !com.amazonaws.mobilehub.v0.NoSQLTable 
+            attributes:
+              Name: S
+              Price: N
+            hashKeyName: Name
+            hashKeyType: S
+            rangeKeyName: ''
+            rangeKeyType: ''
+            tableName: ___DYNAMIC_PREFIX___-Meal_Options
             tablePrivacy: public
   mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint 
     components:

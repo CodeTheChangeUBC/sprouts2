@@ -6,7 +6,7 @@ import { AdminOptions } from './admin_panel/AdminOptions';
 import { ManageVolunteers } from './admin_panel/ManageVolunteers';
 import { ViewLogs } from './admin_panel/ViewLogs';
 import { ShiftDetails } from './admin_panel/ShiftDetails';
-
+import { ModifyMeals } from './admin_panel/ModifyMeals';
 // Volunteer Views
 import { Options } from './volunteer/Options';
 import { LogHours } from './volunteer/LogHours';
@@ -68,6 +68,7 @@ export class RoutingTable extends Component {
             <Route exact path="/" component={AdminOptions}/>
             <Route path="/manageVolunteers" component={ManageVolunteers}/>
             <Route path="/logHours" component={LogHours}/>
+            <Route path="/modifyMeals" component={ModifyMeals}/>
             <Route path="/viewLogs" render={(props) => <ViewLogs {...props} onSelectRow={this.handleSelectRow} />}/>
             <Route path="/shiftDetails" 
             render = {
