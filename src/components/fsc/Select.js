@@ -14,7 +14,17 @@ export const Select = (props) => {
   } else {
     title = <div/>
   }
-
+  if (props.disabled) {
+    return(
+      <div className="form-group">
+        {title}
+        <select value={props.value} className="custom-select" onChange={props.update} disabled>
+          <option key="0" value={props.default}>{props.default}</option>
+          {options}
+        </select>
+      </div>
+    );
+  }
   return(
     <div className="form-group">
       {title}
@@ -31,7 +41,8 @@ Select.propTypes = {
   value: PropTypes.string.isRequired,
   dropdown: PropTypes.arrayOf(PropTypes.string).isRequired,
   update: PropTypes.func.isRequired,
-  default: PropTypes.string
+  default: PropTypes.string,
+  disabled: PropTypes.bool
 };
 
 Select.defaultProps = {

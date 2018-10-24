@@ -26,7 +26,7 @@ export class ModifyMeals extends React.Component {
       this.setState({apiData: response.data.reverse()});
       this.parseTableData();
     }).catch(error => {
-      console.log("Err " + error);
+      console.log(error);
     });
   }
 
@@ -49,7 +49,6 @@ export class ModifyMeals extends React.Component {
     }
     if (this.state.edit && this.isValidandComplete() && canEdit) {
       this.saveMealOption();
-      console.log(this.state.newItem + "PRICE : " + this.state.newPrice);
       this.setState({edit: !this.state.edit});
     }
   }
@@ -73,12 +72,11 @@ export class ModifyMeals extends React.Component {
     let path = '/Meal_Options';
     let init = {
       body: {
-        Name: this.state.newItem,
+        Name: this.state.newItem.trim(),
         Price: this.state.newPrice
       }
     }
     API.put(apiName, path, init).then(response => {
-      console.log(response);
       this.selectedRow = false;
       this.getTableData();
       this.setState({newItem: "", newPrice: -1});
@@ -88,17 +86,19 @@ export class ModifyMeals extends React.Component {
   }
 
   deleteMealOption() {
-    let apiName = 'Meal_OptionsCRUD';
-    let path = '/Meal_Options/object';
-    path += '/' + this.state.newItem;
-    API.del(apiName, path).then(response => {
-      console.log(response); 
-      this.selectedRow = false;
-      this.getTableData();
-      this.setState({newItem: "", newPrice: -1, edit: false});
-    }).catch(error => {
-      console.log("Err " + error);
-    });
+    let con = window.confirm("Are you sure you would like to delete this option?");
+    if (con) {
+      let apiName = 'Meal_OptionsCRUD';
+      let path = '/Meal_Options/object';
+      path += '/' + this.state.newItem;
+      API.del(apiName, path).then(response => {
+        this.selectedRow = false;
+        this.getTableData();
+        this.setState({newItem: "", newPrice: -1, edit: false});
+      }).catch(error => {
+        console.log(error);
+      });
+    }
   }
 
   selectRow = (el) => {

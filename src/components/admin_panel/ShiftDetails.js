@@ -41,7 +41,7 @@ export class ShiftDetails extends React.Component {
       this.setState({apiData: response.data.reverse()});
       this.parseTableData();
     }).catch(error => {
-      console.log("Err " + error);
+      console.log(error);
     });
   }
 
@@ -79,13 +79,12 @@ export class ShiftDetails extends React.Component {
       for(let i=0; i<this.state.meal.length; i++) {
         mealList.push(this.state.meal[i][0]);
       }
-    return ( 
+      return ( 
         <Input title="Meal" renderTitle={true} 
                 value={mealList.toString()}
                 disabled={true}/>
       );
-     }
-     else {
+     } else {
       let output = [];
       output.push(
         <div key={0}> 
@@ -98,10 +97,12 @@ export class ShiftDetails extends React.Component {
             <div className={(this.state.num>1 && this.state.edit)? "col-8 col-sm-9 col-md-10" : "col-12"}>
               <Select
                 renderTitle={false}
-                value = {this.state.meal[i][0]}
+                value = {(this.state.meal[i][0] !== "")? this.state.meal[i][0] : "Choose..."}
                 title = "Meal"
-                update = { (event) => this.setMealAndCost(event, i)}
-                dropdown = {Object.keys(this.state.mealOptions)}/>
+                disabled = {(this.state.mealOptions[this.state.meal[i][0]] === undefined) &&
+                            (this.state.meal[i][0] !== "")}
+                update = {(event) => this.setMealAndCost(event, i)} 
+                dropdown = {Array.from(new Set(Object.keys(this.state.mealOptions).concat(this.state.meal[i][0])))}/>
             </div>
             {(this.state.num>1 && this.state.edit)? (
                 <div className="col-4 col-sm-3 col-md-2 pl-0 mb-3 text-right">
@@ -184,8 +185,6 @@ export class ShiftDetails extends React.Component {
         (this.state.location !== this.props.location)) {
       updated=true;
     }
-    
-    console.log(updated);
     for (let i=0; i<this.state.num; i++) {
       if (!(this.state.meal[i][0]==="Choose...")) {
         valid=true;
@@ -197,7 +196,6 @@ export class ShiftDetails extends React.Component {
     if (this.state.location === "Choose...") { 
       valid=false;
     }
-    console.log(valid);
     return (updated && valid);
   }
 
@@ -209,11 +207,10 @@ export class ShiftDetails extends React.Component {
       let path = '/Volunteer_Logs/object/';
       path += this.state.name + "/" + this.state.date;
       API.del (apiName, path).then(response => {
-        console.log(response);
         alert("Entry Deleted");
         this.props.history.push(this.props.backLink);
       }).catch(error => {
-        console.log(error.response);
+        console.log(error);
       })
   
     }
@@ -244,11 +241,10 @@ export class ShiftDetails extends React.Component {
         }
       };
       API.put(apiName, path, init).then(response => {
-        console.log(response);
         alert("Entry Updated");
         this.props.history.push(this.props.backLink);
       }).catch(error => {
-        console.log(error.response)
+        console.log(error)
       });
 
     } else {
