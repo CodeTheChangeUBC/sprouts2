@@ -13,7 +13,7 @@ export class LogHours extends React.Component {
     this.removeMeal = this.removeMeal.bind(this);
     this.isValid = this.isValid.bind(this);
   }
-
+  
   componentDidMount() {
     Auth.currentSession()
       .then((session) => {
@@ -168,7 +168,8 @@ export class LogHours extends React.Component {
           </div>
           {(this.state.numMeals>1)? (
               <div className="col-4 col-sm-3 col-md-2 pl-0 mb-3 text-right">
-                <button type="button" className="btn btn-outline-danger" aria-label="Close" onClick={ (event) => this.removeMeal(this.state.meal[i])}>
+                <button type="button" className="btn btn-outline-danger" aria-label="Close" 
+                onClick={ (event) => this.removeMeal(this.state.meal[i])}>
                   Remove
                 </button>
               </div>
@@ -228,7 +229,8 @@ export class LogHours extends React.Component {
               <Input value={this.state.date} title="Date" type="date" update={(event) => this.setState({date: event.target.value})}/>
               <Input value={this.state.startTime} title="Start time" type="time" update={(event) => this.setState({startTime: event.target.value})}/>
               <Input value={this.state.endTime} title="End time" type="time" update={(event) => this.setState({endTime: event.target.value})}/>
-              <Select value={this.state.location} title="Location" update={(event) => this.setState({location: event.target.value})} dropdown={["Sprouts Cafe", "Option 2", "Option 3"]} />
+              <Select value={this.state.location} title="Location" update={(event) => this.setState({location: event.target.value})} 
+                dropdown={["Seedlings", "Sprouts Cafe", "Community Eats", "Sprouts Boxes", "Events/Promotions"]} />
               {this.createMealInputs()}
               <div className="clearfix d-flex justify-content-start pb-3">
                 <button type="button" className="btn btn-outline-success" aria-label="Close" onClick={this.addMeal} disabled={addButton}>

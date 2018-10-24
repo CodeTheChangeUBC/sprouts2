@@ -21,7 +21,7 @@ export class ShiftDetails extends React.Component {
       meal: this.props.meal,
       cost: this.props.cost,
       edit: false,
-      mealOptions: {}
+      mealOptions: {},
     };
     this.getTableData();
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -136,7 +136,7 @@ export class ShiftDetails extends React.Component {
       return (<Select title="Location" renderTitle={true}
       value={this.state.location}
       update={this.handleChangeLocation}
-      dropdown={["Sprouts Cafe", "Option 2", "Option 3"]}
+      dropdown={["Seedlings", "Sprouts Cafe", "Community Eats", "Sprouts Boxes", "Events/Promotions"]}
       />
       )
     } 
