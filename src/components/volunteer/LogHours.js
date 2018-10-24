@@ -37,7 +37,7 @@ export class LogHours extends React.Component {
       endMinute=endMinute - 60;
     }
     let endTime = (endHour < 10 ? '0' : '') + endHour + ':' + (endMinute < 10 ? '0' : '') + endMinute;
-    
+    this.getMealData();
 
     return {
       name: "",
@@ -48,12 +48,7 @@ export class LogHours extends React.Component {
       meal: [["", "0"]],
       cost: "0",
       numMeals: 1,
-      mealOptions: {
-        Sandwich: "7",
-        Coffee: "3",
-        Cookie: "1",
-        None: "0"
-      },
+      mealOptions: {},
       errorMsg: ""
     };
   }
@@ -104,6 +99,30 @@ export class LogHours extends React.Component {
     });
   }
   }
+
+  getMealData() {
+    let apiName = 'Meal_OptionsCRUD';
+    let path = '/Meal_Options';
+    API.get(apiName, path).then(response => {
+      this.setState({apiData: response.data.reverse()});
+      this.parseMealData();
+    }).catch(error => {
+      console.log("Err " + error);
+    });
+  }
+
+  parseMealData() {
+    let mealOptions = {};
+    let apiData = this.state.apiData;
+    apiData.forEach(el => {
+        let name = el.Name;
+        let price = el.Price;
+        mealOptions[name] = price;
+      }
+    );
+    this.setState({mealOptions: mealOptions});
+  }
+
 
   addMeal = () => {
     let numMeals = this.state.numMeals + 1;

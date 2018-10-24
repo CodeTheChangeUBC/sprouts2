@@ -21,13 +21,9 @@ export class ShiftDetails extends React.Component {
       meal: this.props.meal,
       cost: this.props.cost,
       edit: false,
-      mealOptions: {
-        Sandwich: "7",
-        Coffee: "3",
-        Cookie: "1",
-        None: "0"
-      }
+      mealOptions: {}
     };
+    this.getTableData();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.createMealInputs = this.createMealInputs.bind(this);
     this.addMeal = this.addMeal.bind(this);
@@ -37,6 +33,28 @@ export class ShiftDetails extends React.Component {
     this.handleDelete = this.handleDelete.bind(this);
     this.handleEdit = this.handleEdit.bind(this);
     this.removeMeal = this.removeMeal.bind(this);
+  }
+  getTableData() {
+    let apiName = 'Meal_OptionsCRUD';
+    let path = '/Meal_Options';
+    API.get(apiName, path).then(response => {
+      this.setState({apiData: response.data.reverse()});
+      this.parseTableData();
+    }).catch(error => {
+      console.log("Err " + error);
+    });
+  }
+
+  parseTableData() {
+    let mealOptions = {};
+    let apiData = this.state.apiData;
+    apiData.forEach(el => {
+        let name = el.Name;
+        let price = el.Price;
+        mealOptions[name] = price;
+      }
+    );
+    this.setState({mealOptions: mealOptions});
   }
 
   removeMeal (meal) {
