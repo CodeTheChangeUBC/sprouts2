@@ -4,70 +4,101 @@ apps:
 features:
   cloudlogic: !com.amazonaws.mobilehub.v0.CloudLogic 
     components:
+      Meal_OptionsCRUD: !com.amazonaws.mobilehub.v0.API 
+        attributes:
+          disable-aws-auth: false
+          name: Meal_OptionsCRUD
+          requires-signin: false
+          sdk-generation-stage-name: Development
+        paths:
+          /Meal_Options: !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/MealOptions-20181022125608.zip
+            description: 'Handler for calls to resource path : /Meal_Options/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: PTtAB1yHbXt3Dd7CEYXrlaydC8UrWE6xSm3TPPrWLDU=
+            memorySize: '128'
+            modified: '2018-10-22T19:57:33.852+0000'
+            name: MealOptions
+            runtime: nodejs6.10
+            timeout: '3'
+            version: V2fD8yiVTahEIahput6LIEZSUWTN46m9
+          '/Meal_Options/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
+            codeFilename: uploads/MealOptions-20181022125608.zip
+            description: 'Handler for calls to resource path : /Meal_Options/{proxy+}'
+            enableCORS: true
+            environment: {}
+            handler: lambda.handler
+            hashcode: PTtAB1yHbXt3Dd7CEYXrlaydC8UrWE6xSm3TPPrWLDU=
+            memorySize: '128'
+            modified: '2018-10-22T19:57:33.852+0000'
+            name: MealOptions
+            runtime: nodejs6.10
+            timeout: '3'
+            version: V2fD8yiVTahEIahput6LIEZSUWTN46m9
       Volunteer_LogsCRUD: !com.amazonaws.mobilehub.v0.API 
         attributes:
+          disable-aws-auth: false
           name: Volunteer_LogsCRUD
-          requires-signin: true
+          requires-signin: false
           sdk-generation-stage-name: Development
         paths:
           /Volunteer_Logs: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/VolunteerLogs-20180901054958.zip
             description: 'Handler for calls to resource path : /Volunteer_Logs/{proxy+}'
-            enableCORS: true
             environment: {}
-            handler: lambda.handler
-            hashcode: mwTWwaZHsBsyiMefYDsKiEB4FVPNW+QJ9Ef1L38562w=
+            handler: index.handler
+            hashcode: o8sWiJcy9NAl17BCwQWu2TLtsPpk48G1Kr3ZOsz0Txs=
             memorySize: '128'
-            modified: '2018-09-01T05:50:31.718+0000'
+            modified: '2018-10-28T22:27:05.182+0000'
             name: VolunteerLogs
             runtime: nodejs6.10
             timeout: '3'
-            version: PTeBLrdBLmmcJUZoHtmmRoQZ6LrIekus
+            version: Z.TeFkqa2YTTNH3wYZMjbWog9cG7dDhc
           '/Volunteer_Logs/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/VolunteerLogs-20180901054958.zip
             description: 'Handler for calls to resource path : /Volunteer_Logs/{proxy+}'
-            enableCORS: true
             environment: {}
-            handler: lambda.handler
-            hashcode: mwTWwaZHsBsyiMefYDsKiEB4FVPNW+QJ9Ef1L38562w=
+            handler: index.handler
+            hashcode: o8sWiJcy9NAl17BCwQWu2TLtsPpk48G1Kr3ZOsz0Txs=
             memorySize: '128'
-            modified: '2018-09-01T05:50:31.718+0000'
+            modified: '2018-10-28T22:27:05.182+0000'
             name: VolunteerLogs
             runtime: nodejs6.10
             timeout: '3'
-            version: fFSIpNpcO7Gkcg3OUgjiECMj38pObdjP
+            version: hxnyVIN0K0ye2.S_y2g5T_RpjYxsPPVH
       sampleCloudApi: !com.amazonaws.mobilehub.v0.API 
         attributes:
+          disable-aws-auth: false
           name: sampleCloudApi
           requires-signin: false
           sdk-generation-stage-name: Development
         paths:
           /items: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/sampleLambda-20180901054523.zip
+            codeFilename: uploads/sampleLambda-20181022125608.zip
             description: 'Handler for calls to resource path : /items/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: BHFJHf9AN4wBw/STWPcrmunY5nDhlZdmMuIvGTt+3G4=
+            hashcode: QqNANPWBFx/A1+NNAGomaciDY4UBxCyl8bus6ARk2GI=
             memorySize: '128'
-            modified: '2018-09-01T05:50:37.054+0000'
+            modified: '2018-10-22T19:57:34.202+0000'
             name: sampleLambda
             runtime: nodejs6.10
             timeout: '3'
-            version: IZFgc8jbh8HxGSK49LvUJNeDOv9Yi7JM
+            version: UcouqS7thsRt3DLD44nDDCZkbVs5p0zn
           '/items/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/sampleLambda-20180901054523.zip
+            codeFilename: uploads/sampleLambda-20181022125608.zip
             description: 'Handler for calls to resource path : /items/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: BHFJHf9AN4wBw/STWPcrmunY5nDhlZdmMuIvGTt+3G4=
+            hashcode: QqNANPWBFx/A1+NNAGomaciDY4UBxCyl8bus6ARk2GI=
             memorySize: '128'
-            modified: '2018-09-01T05:50:37.054+0000'
+            modified: '2018-10-22T19:57:34.202+0000'
             name: sampleLambda
             runtime: nodejs6.10
             timeout: '3'
-            version: RnhPDr7_FwFb0ZQzcEdNhcQ5RjPn.isK
+            version: UcouqS7thsRt3DLD44nDDCZkbVs5p0zn
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
@@ -112,6 +143,16 @@ features:
             rangeKeyName: date
             rangeKeyType: S
             tableName: ___DYNAMIC_PREFIX___-Volunteer_Logs
+            tablePrivacy: public
+          - !com.amazonaws.mobilehub.v0.NoSQLTable 
+            attributes:
+              Name: S
+              Price: N
+            hashKeyName: Name
+            hashKeyType: S
+            rangeKeyName: ''
+            rangeKeyType: ''
+            tableName: ___DYNAMIC_PREFIX___-Meal_Options
             tablePrivacy: public
   mobile-analytics: !com.amazonaws.mobilehub.v0.Pinpoint 
     components:

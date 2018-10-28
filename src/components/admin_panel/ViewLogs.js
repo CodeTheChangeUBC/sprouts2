@@ -17,6 +17,8 @@ export class ViewLogs extends React.Component {
       users: [],
       selectedUser: "All Users"
     };
+    // Select rows from filteredData, not from ApiData
+    let filteredData = [];
     this.getTableData();
   }
 
@@ -58,7 +60,7 @@ export class ViewLogs extends React.Component {
     let tableData = [];
     let apiData = this.state.apiData;
     let allUsers = [];
-
+    let filtered = [];
     apiData.forEach(el => {
       let date = new Date(el.date).toISOString();
       let fromDate = new Date(this.state.fromDate).toISOString();
@@ -66,6 +68,7 @@ export class ViewLogs extends React.Component {
       if (date >= fromDate && date <= toDate) {
         let row = {col1: el.name, col2: el.date, col3: el.location};
         tableData.push(row);
+        filtered.push(el);
       }
       allUsers.push(el.name);
     });
@@ -77,6 +80,7 @@ export class ViewLogs extends React.Component {
       });
       this.setState({users: arrUsers});
     }
+    this.filteredData = filtered;
     this.setState({tableData: tableData});
   }
   handleFilter(event) {
@@ -103,7 +107,7 @@ export class ViewLogs extends React.Component {
   }
 
   selectRow = (el) => {
-    this.props.onSelectRow(this.state.apiData[el]);
+    this.props.onSelectRow(this.filteredData[el]);
     this.props.history.push('/shiftDetails');
   }
 

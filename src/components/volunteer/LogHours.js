@@ -13,7 +13,7 @@ export class LogHours extends React.Component {
     this.removeMeal = this.removeMeal.bind(this);
     this.isValid = this.isValid.bind(this);
   }
-
+  
   componentDidMount() {
     Auth.currentSession()
       .then((session) => {
@@ -37,7 +37,7 @@ export class LogHours extends React.Component {
       endMinute=endMinute - 60;
     }
     let endTime = (endHour < 10 ? '0' : '') + endHour + ':' + (endMinute < 10 ? '0' : '') + endMinute;
-    
+    this.getMealData();
 
     return {
       name: "",
@@ -48,12 +48,7 @@ export class LogHours extends React.Component {
       meal: [["", "0"]],
       cost: "0",
       numMeals: 1,
-      mealOptions: {
-        Sandwich: "7",
-        Coffee: "3",
-        Cookie: "1",
-        None: "0"
-      },
+      mealOptions: {},
       errorMsg: ""
     };
   }
@@ -105,6 +100,30 @@ export class LogHours extends React.Component {
   }
   }
 
+  getMealData() {
+    let apiName = 'Meal_OptionsCRUD';
+    let path = '/Meal_Options';
+    API.get(apiName, path).then(response => {
+      this.setState({apiData: response.data.reverse()});
+      this.parseMealData();
+    }).catch(error => {
+      console.log("Err " + error);
+    });
+  }
+
+  parseMealData() {
+    let mealOptions = {};
+    let apiData = this.state.apiData;
+    apiData.forEach(el => {
+        let name = el.Name;
+        let price = el.Price;
+        mealOptions[name] = price;
+      }
+    );
+    this.setState({mealOptions: mealOptions});
+  }
+
+
   addMeal = () => {
     let numMeals = this.state.numMeals + 1;
     this.setState({numMeals: numMeals});
@@ -149,7 +168,8 @@ export class LogHours extends React.Component {
           </div>
           {(this.state.numMeals>1)? (
               <div className="col-4 col-sm-3 col-md-2 pl-0 mb-3 text-right">
-                <button type="button" className="btn btn-outline-danger" aria-label="Close" onClick={ (event) => this.removeMeal(this.state.meal[i])}>
+                <button type="button" className="btn btn-outline-danger" aria-label="Close" 
+                onClick={ (event) => this.removeMeal(this.state.meal[i])}>
                   Remove
                 </button>
               </div>
@@ -209,7 +229,8 @@ export class LogHours extends React.Component {
               <Input value={this.state.date} title="Date" type="date" update={(event) => this.setState({date: event.target.value})}/>
               <Input value={this.state.startTime} title="Start time" type="time" update={(event) => this.setState({startTime: event.target.value})}/>
               <Input value={this.state.endTime} title="End time" type="time" update={(event) => this.setState({endTime: event.target.value})}/>
-              <Select value={this.state.location} title="Location" update={(event) => this.setState({location: event.target.value})} dropdown={["Sprouts Cafe", "Option 2", "Option 3"]} />
+              <Select value={this.state.location} title="Location" update={(event) => this.setState({location: event.target.value})} 
+                dropdown={["Seedlings", "Sprouts Cafe", "Community Eats", "Sprouts Boxes", "Events/Promotions"]} />
               {this.createMealInputs()}
               <div className="clearfix d-flex justify-content-start pb-3">
                 <button type="button" className="btn btn-outline-success" aria-label="Close" onClick={this.addMeal} disabled={addButton}>
