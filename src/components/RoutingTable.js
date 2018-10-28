@@ -8,7 +8,7 @@ import { ViewLogs } from './admin_panel/ViewLogs';
 import { ShiftDetails } from './admin_panel/ShiftDetails';
 import { ModifyMeals } from './admin_panel/ModifyMeals';
 // Volunteer Views
-import { Options } from './volunteer/Options';
+import { Options } from './volunteer/VolunteerOptions';
 import { LogHours } from './volunteer/LogHours';
 import { ShiftHistory } from './volunteer/ShiftHistory';
 

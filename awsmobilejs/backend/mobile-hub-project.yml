@@ -6,6 +6,7 @@ features:
     components:
       Meal_OptionsCRUD: !com.amazonaws.mobilehub.v0.API 
         attributes:
+          disable-aws-auth: false
           name: Meal_OptionsCRUD
           requires-signin: false
           sdk-generation-stage-name: Development
@@ -35,41 +36,39 @@ features:
             name: MealOptions
             runtime: nodejs6.10
             timeout: '3'
-            version: Gojnn2dR_FpAA1K2axuAmhIOSwFP35nR
+            version: V2fD8yiVTahEIahput6LIEZSUWTN46m9
       Volunteer_LogsCRUD: !com.amazonaws.mobilehub.v0.API 
         attributes:
+          disable-aws-auth: false
           name: Volunteer_LogsCRUD
           requires-signin: false
           sdk-generation-stage-name: Development
         paths:
           /Volunteer_Logs: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/VolunteerLogs-20181022103404.zip
             description: 'Handler for calls to resource path : /Volunteer_Logs/{proxy+}'
-            enableCORS: true
             environment: {}
-            handler: lambda.handler
-            hashcode: e0DmLwZ19e82NvTaX/oRlWR+GOIzOajJFIRUy8TJ28o=
+            handler: index.handler
+            hashcode: o8sWiJcy9NAl17BCwQWu2TLtsPpk48G1Kr3ZOsz0Txs=
             memorySize: '128'
-            modified: '2018-10-22T17:35:06.707+0000'
+            modified: '2018-10-28T22:27:05.182+0000'
             name: VolunteerLogs
             runtime: nodejs6.10
             timeout: '3'
-            version: Und1oVESln4O3ngmjpPDf3O0hy4t7jaA
+            version: Z.TeFkqa2YTTNH3wYZMjbWog9cG7dDhc
           '/Volunteer_Logs/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/VolunteerLogs-20181022103404.zip
             description: 'Handler for calls to resource path : /Volunteer_Logs/{proxy+}'
-            enableCORS: true
             environment: {}
-            handler: lambda.handler
-            hashcode: e0DmLwZ19e82NvTaX/oRlWR+GOIzOajJFIRUy8TJ28o=
+            handler: index.handler
+            hashcode: o8sWiJcy9NAl17BCwQWu2TLtsPpk48G1Kr3ZOsz0Txs=
             memorySize: '128'
-            modified: '2018-10-22T17:35:06.707+0000'
+            modified: '2018-10-28T22:27:05.182+0000'
             name: VolunteerLogs
             runtime: nodejs6.10
             timeout: '3'
-            version: Und1oVESln4O3ngmjpPDf3O0hy4t7jaA
+            version: hxnyVIN0K0ye2.S_y2g5T_RpjYxsPPVH
       sampleCloudApi: !com.amazonaws.mobilehub.v0.API 
         attributes:
+          disable-aws-auth: false
           name: sampleCloudApi
           requires-signin: false
           sdk-generation-stage-name: Development
@@ -99,7 +98,7 @@ features:
             name: sampleLambda
             runtime: nodejs6.10
             timeout: '3'
-            version: DB4auqO7.yrlrSda0.9HvFiPwkxW9dRn
+            version: UcouqS7thsRt3DLD44nDDCZkbVs5p0zn
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true

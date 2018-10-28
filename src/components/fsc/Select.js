@@ -14,21 +14,11 @@ export const Select = (props) => {
   } else {
     title = <div/>
   }
-  if (props.disabled) {
-    return(
-      <div className="form-group">
-        {title}
-        <select value={props.value} className="custom-select" onChange={props.update} disabled>
-          <option key="0" value={props.default}>{props.default}</option>
-          {options}
-        </select>
-      </div>
-    );
-  }
+  
   return(
     <div className="form-group">
       {title}
-      <select value={props.value} className="custom-select" onChange={props.update}>
+      <select value={props.value} className="custom-select" onChange={props.update} disabled={props.disabled}>
         <option key="0" value={props.default}>{props.default}</option>
         {options}
       </select>
