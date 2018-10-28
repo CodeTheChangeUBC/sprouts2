@@ -10,10 +10,11 @@ export class MySignUp extends SignUp {
       name: "",
       username: "",
       password: "",
+      checkPassword: "",
       email: ""
     };
-    
     this.signUp = this.signUp.bind(this);
+    this.handleCheckPassword = this.handleCheckPassword.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
     this.handleName = this.handleName.bind(this);
@@ -22,13 +23,26 @@ export class MySignUp extends SignUp {
   
   signUp() {
     const { name, username, password, email } = this.state;
-    Auth.signUp({
+    if (this.state.name === "") {
+      alert ("Please enter your name.")
+    } else if (this.state.password !== this.state.checkPassword) {
+      alert("Passwords do not match.") 
+    } else if (this.state.email === "") {
+      alert ("Please enter an email address.")
+    } else  {
+      Auth.signUp({
       username,
       password,
       attributes: {email, name}
     })
       .then(data => {this.changeState('confirmSignUp', username)})
-      .catch(err => alert(err));
+      .catch(err => { 
+        if (err["name"] === "InvalidParameterException") {
+          alert("Password must contain at least one uppercase letter, lowercase letter, number and must be at least 8 characters long");
+        }
+        else alert(err);
+      });
+    }
   }
   
   handleName(event) {
@@ -47,6 +61,9 @@ export class MySignUp extends SignUp {
     this.setState({ password: event.target.value });
   }
 
+  handleCheckPassword(event) {
+    this.setState({ checkPassword: event.target.value});
+  }
   showComponent() {
     return (
       <div className="container">
@@ -58,13 +75,17 @@ export class MySignUp extends SignUp {
                 <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="text" id="name" key="name" name="name" placeholder="Name" onChange={ this.handleName } value={ this.state.name }/>
               </div>
               <div className="form-group">
+                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="email" id="email" key="email" name="email" placeholder="Email" onChange={ this.handleEmail } value={ this.state.email }/>
+              </div>
+              <div className="form-group">
                 <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="text" id="username" key="username" name="username" placeholder="Username" onChange={ this.handleUsername } value={ this.state.username }/>
               </div>
               <div className="form-group">
                 <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="password" id="password" key="password" name="password" placeholder="Password" onChange={ this.handlePassword } value={ this.state.password }/>
               </div>
               <div className="form-group">
-                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="email" id="email" key="email" name="email" placeholder="Email" onChange={ this.handleEmail } value={ this.state.email }/>
+                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="password" id="checkPassword" key="checkPassword" name="checkPassword" placeholder="Confirm Password" 
+                onChange={ this.handleCheckPassword } value={ this.state.checkPassword }/>
               </div>
               <div className="py-1">
                 <button type="button" className="btn btn-block rounded-0 btn-primary" onClick={ this.signUp } >{ I18n.get('Create Account') }</button>

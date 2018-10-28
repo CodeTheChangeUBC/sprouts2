@@ -23,12 +23,13 @@ export class MyConfirmSignUp extends ConfirmSignUp {
     const { username, code } = this.state;
     Auth.confirmSignUp(username, code)
       .then(data => {
+        console.log(data);
         this.changeState('signedUp');
         alert("Successfully signed up");
       })
       .catch(err => {
-        this.error(err); 
-        alert("Please try again");}
+        this.error(err);
+      }
       );
   }
   
@@ -37,7 +38,6 @@ export class MyConfirmSignUp extends ConfirmSignUp {
     Auth.resendSignUp(username)
       .then(() => alert("code resent"))
       .catch(err => {
-        alert("Unsuccessful: Please check your username");
         this.error(err);}
       );
   }
