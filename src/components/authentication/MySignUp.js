@@ -27,8 +27,13 @@ export class MySignUp extends SignUp {
       alert ("Please enter your name.")
     } else if (this.state.password !== this.state.checkPassword) {
       alert("Passwords do not match.") 
-    } else if (this.state.email === "") {
-      alert ("Please enter an email address.")
+    } else if (this.state.password.length < 8)  {
+      alert("Password must contain at least one uppercase letter, lowercase letter, number and must be at least 8 characters long")
+    } else if (this.state.password === this.state.password.toLowerCase() ||
+              this.state.password === this.state.password.toUpperCase())  {
+      alert("Password must contain at least one uppercase letter, lowercase letter, and number.")
+    } else if (!/\d/.test(this.state.password))  {
+      alert("Password must contain at least one number.")
     } else  {
       Auth.signUp({
       username,
@@ -37,10 +42,15 @@ export class MySignUp extends SignUp {
     })
       .then(data => {this.changeState('confirmSignUp', username)})
       .catch(err => { 
-        if (err["name"] === "InvalidParameterException") {
+        if (err["message"] === "Invalid email address format.") {
+          alert("Please enter a valid email address.");
+        } else if (err["message"].indexOf("Value at 'username' failed") >= 0) {
+          alert("Please enter a valid UserName.") 
+        } else if (err["name"] === "InvalidParameterException") {
           alert("Password must contain at least one uppercase letter, lowercase letter, number and must be at least 8 characters long");
+        } else {
+          console.log(err);
         }
-        else alert(err);
       });
     }
   }
