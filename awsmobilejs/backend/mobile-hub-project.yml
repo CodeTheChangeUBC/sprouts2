@@ -6,7 +6,6 @@ features:
     components:
       Meal_OptionsCRUD: !com.amazonaws.mobilehub.v0.API 
         attributes:
-          disable-aws-auth: false
           name: Meal_OptionsCRUD
           requires-signin: false
           sdk-generation-stage-name: Development
@@ -36,10 +35,9 @@ features:
             name: MealOptions
             runtime: nodejs6.10
             timeout: '3'
-            version: qfxnR613885wO9wY0PuUq5GtOfBNpgQ3
+            version: Uj5pnDan9ReJurApT6hX8S14JUnP8k4y
       Volunteer_LogsCRUD: !com.amazonaws.mobilehub.v0.API 
         attributes:
-          disable-aws-auth: false
           name: Volunteer_LogsCRUD
           requires-signin: false
           sdk-generation-stage-name: Development
@@ -47,60 +45,61 @@ features:
           /Volunteer_Logs: !com.amazonaws.mobilehub.v0.Function 
             codeFilename: uploads/VolunteerLogs-20181028153617.zip
             description: 'Handler for calls to resource path : /Volunteer_Logs/{proxy+}'
+            enableCORS: true
             environment: {}
-            handler: index.handler
+            handler: lambda.handler
             hashcode: 4Qm9lUruQFeBULDS3BCf4amf26Gzg7QDWj3GbaWi0CM=
             memorySize: '128'
-            modified: '2018-10-28T22:38:02.815+0000'
+            modified: '2018-10-29T02:03:27.497+0000'
             name: VolunteerLogs
             runtime: nodejs6.10
             timeout: '3'
-            version: vSi7mVnpXuf9WjWnObNGjng90cWzsQY3
+            version: wKMb0iATu.lAMtGxUltC4t6._4OSepGh
           '/Volunteer_Logs/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
             codeFilename: uploads/VolunteerLogs-20181028153617.zip
             description: 'Handler for calls to resource path : /Volunteer_Logs/{proxy+}'
+            enableCORS: true
             environment: {}
-            handler: index.handler
+            handler: lambda.handler
             hashcode: 4Qm9lUruQFeBULDS3BCf4amf26Gzg7QDWj3GbaWi0CM=
             memorySize: '128'
-            modified: '2018-10-28T22:38:02.815+0000'
+            modified: '2018-10-29T02:03:27.497+0000'
             name: VolunteerLogs
             runtime: nodejs6.10
             timeout: '3'
-            version: HMnIoxRjDm5Y7ivwNuOvwKZYvH050GTS
+            version: zQ8bqrTdjXZiQL_o99BHb.dO8yT1Cl6M
       sampleCloudApi: !com.amazonaws.mobilehub.v0.API 
         attributes:
-          disable-aws-auth: false
           name: sampleCloudApi
           requires-signin: false
           sdk-generation-stage-name: Development
         paths:
           /items: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/sampleLambda-20181028153617.zip
+            codeFilename: uploads/sampleLambda-20181028191140.zip
             description: 'Handler for calls to resource path : /items/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: qEy1yf9aCfRaMwARvKWrrzthIE9UY8Vei707uuIZp+U=
+            hashcode: x6a03SUhHzlw8V6ZYjQ2/Z261I79/0k6b6EY4006eww=
             memorySize: '128'
-            modified: '2018-10-28T22:38:02.021+0000'
+            modified: '2018-10-29T02:12:30.051+0000'
             name: sampleLambda
             runtime: nodejs6.10
             timeout: '3'
-            version: 28dKlqT00CZP8gwPLvm98pMj9FtVqxyK
+            version: M2_.n2B7lmC8GMwTEFS9elvkAZQmkCie
           '/items/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/sampleLambda-20181028153617.zip
+            codeFilename: uploads/sampleLambda-20181028191140.zip
             description: 'Handler for calls to resource path : /items/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: qEy1yf9aCfRaMwARvKWrrzthIE9UY8Vei707uuIZp+U=
+            hashcode: x6a03SUhHzlw8V6ZYjQ2/Z261I79/0k6b6EY4006eww=
             memorySize: '128'
-            modified: '2018-10-28T22:38:02.021+0000'
+            modified: '2018-10-29T02:12:30.051+0000'
             name: sampleLambda
             runtime: nodejs6.10
             timeout: '3'
-            version: AqnRG6kIeHBAQYfTFznqmPNaGWyh2NEl
+            version: vmMs2wOh88baNIsqCdjfglHTU5UX.895
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
