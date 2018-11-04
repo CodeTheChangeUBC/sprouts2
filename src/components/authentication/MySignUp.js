@@ -24,7 +24,11 @@ export class MySignUp extends SignUp {
   signUp() {
     const { name, username, password, email } = this.state;
     if (this.state.name === "") {
-      alert ("Please enter your name.")
+      alert("Please enter your name.")
+    } else if (this.state.email === "") {
+      alert("Please enter a valid email address.") 
+    } else if (this.state.username === "") {
+      alert("Please enter a valid UserName.") 
     } else if (this.state.password !== this.state.checkPassword) {
       alert("Passwords do not match.") 
     } else if (this.state.password.length < 8)  {
