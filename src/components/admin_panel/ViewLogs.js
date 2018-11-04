@@ -42,11 +42,9 @@ export class ViewLogs extends React.Component {
       path = '/Volunteer_Logs/' + this.state.selectedUser;
       all = false;
     }
-    console.log(path);
     API.get(apiName, path).then(response => {
-      console.log(response.data);
       if (all) {
-        this.setState({apiData: response.data.reverse()}, () => console.log(this.state.apiData));
+        this.setState({apiData: response.data.reverse()});
       } else {
         this.setState({apiData: response.reverse()});
       }
@@ -92,17 +90,21 @@ export class ViewLogs extends React.Component {
   }
   exportData() {
     let data = this.state.apiData;
-    var lineArray = [];
+    let lineArray = [];
     let csvContent = "data:text/csv;charset=utf-8,";
     csvContent += "User, Date, Location, Start Time, End Time, Meal, Cost\r\n";
 
     data.forEach(function(el){
-      let line = el.name + "," + el.date + "," + el.location + "," + el.startTime + "," + el.endTime + "," + el.meal + "," +  el.cost;
+      let mealList = "";
+      for (let i=0; i< el.meal.length; i++) {
+        mealList += (el.meal[i][0] + "; ");
+      }
+      let line = el.name + "," + el.date + "," + el.location + "," + el.startTime + "," + el.endTime + "," + mealList + "," +  el.cost;
       lineArray.push(line);
     }); 
     csvContent += lineArray.join("\r\n");
 
-    var encodedUri = encodeURI(csvContent);
+    let encodedUri = encodeURI(csvContent);
     window.open(encodedUri);
   }
 
