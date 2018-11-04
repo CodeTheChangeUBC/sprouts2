@@ -86,29 +86,6 @@ app.get('/Volunteer_Logs/:name', function(req, res) {
   });
 });
 
-/**************************************
- * HTTP scan dynamo *
- ***************************************/
-app.get("/Volunteer_Logs", function (req, res) {
-    const payload = {
-        TableName: tableName,
-        Limit: 1000, // optional (limit the number of items to evaluate)
-        Select: 'ALL_ATTRIBUTES',
-    };
-
-    dynamodb.scan(payload, (err, data) => {
-        if (err) {
-          res.json({error: 'Could not load items: ' + err.message});
-        }
-
-        res.json({
-            data: data.Items.map(item => {
-              return item;
-            })
-        });
-    });
-});
-
 /*****************************************
  * HTTP Get method for get single object *
  *****************************************/
@@ -151,6 +128,30 @@ app.get('/Volunteer_Logs/object/:name/:date', function(req, res) {
   });
 });
 
+/**************************************
+ * HTTP scan dynamo *
+ ***************************************/
+app.get("/Volunteer_Logs", function (req, res) {
+  const payload = {
+    TableName: tableName,
+    Limit: 1000, // optional (limit the number of items to evaluate)
+    Select: 'ALL_ATTRIBUTES',
+  };
+
+  dynamodb.scan(payload, (err, data) => {
+    if (err) {
+      res.json({
+        error: 'Could not load items: ' + err.message
+      });
+    }
+
+    res.json({
+      data: data.Items.map(item => {
+        return item;
+      })
+    });
+  });
+});
 
 /************************************
 * HTTP put method for insert object *
