@@ -29,7 +29,7 @@ $> npm install
 ### Run app locally
 
 ```bash
-$> awsmobile run
+$> npm start
 ```
 
 go to http://localhost:3000 to view app.

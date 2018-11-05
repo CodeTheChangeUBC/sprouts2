@@ -61,8 +61,14 @@ export class ViewLogs extends React.Component {
     let filtered = [];
     apiData.forEach(el => {
       let date = new Date(el.date).toISOString();
-      let fromDate = new Date(this.state.fromDate).toISOString();
-      let toDate = new Date(this.state.toDate).toISOString();
+      let fromDate;
+      let toDate
+      try {
+        fromDate = new Date(this.state.fromDate).toISOString();
+        toDate = new Date(this.state.toDate).toISOString();
+      } catch (err) {
+        console.log("invalid date format");
+      }
       if (date >= fromDate && date <= toDate) {
         let row = {col1: el.name, col2: el.date, col3: el.location};
         tableData.push(row);

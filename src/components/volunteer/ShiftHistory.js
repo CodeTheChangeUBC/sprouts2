@@ -26,7 +26,7 @@ export class ShiftHistory extends React.Component {
     Auth.currentSession()
       .then((session) => {
         let apiName = 'Volunteer_LogsCRUD';
-        let path = '/Volunteer_Logs/' + session.accessToken.payload.username;
+        let path = '/Volunteer_Logs/' + session.idToken.payload.email;
 
         API.get(apiName, path).then(response => {
           this.setState({apiData: response.reverse()});

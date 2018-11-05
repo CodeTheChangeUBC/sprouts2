@@ -44,16 +44,14 @@ export class MySignUp extends SignUp {
       password,
       attributes: {email, name}
     })
-      .then(data => {this.changeState('confirmSignUp', username)})
+      .then(data => {
+        this.changeState('signIn');
+      })
       .catch(err => { 
-        if (err["message"] === "Invalid email address format.") {
-          alert("Please enter a valid email address.");
-        } else if (err["message"].indexOf("Value at 'username' failed") >= 0) {
-          alert("Please enter a valid UserName.") 
-        } else if (err["name"] === "InvalidParameterException") {
-          alert("Password must contain at least one uppercase letter, lowercase letter, number and must be at least 8 characters long");
+        if (err["message"]) {
+          alert(err["message"]);
         } else {
-          console.log(err);
+          alert(err);
         }
       });
     }
@@ -64,7 +62,7 @@ export class MySignUp extends SignUp {
   }
   
   handleEmail(event) {
-    this.setState({ email: event.target.value });
+    this.setState({ email: event.target.value, username: event.target.value });
   }
   
   handleUsername(event) {
@@ -91,9 +89,9 @@ export class MySignUp extends SignUp {
               <div className="form-group">
                 <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="email" id="email" key="email" name="email" placeholder="Email" onChange={ this.handleEmail } value={ this.state.email }/>
               </div>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="text" id="username" key="username" name="username" placeholder="Username" onChange={ this.handleUsername } value={ this.state.username }/>
-              </div>
+              </div> */}
               <div className="form-group">
                 <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="password" id="password" key="password" name="password" placeholder="Password" onChange={ this.handlePassword } value={ this.state.password }/>
               </div>
@@ -105,9 +103,6 @@ export class MySignUp extends SignUp {
                 <button type="button" className="btn btn-block rounded-0 btn-primary" onClick={ this.signUp } >{ I18n.get('Create Account') }</button>
               </div>
             </form>
-            <div className="py-1">
-              <button type="button" className="btn btn-block rounded-0 btn-primary" onClick={() => this.changeState('confirmSignUp')} >Confirm a code</button>
-            </div>
             <div className="py-1">
               <button type="button" className="btn btn-link" onClick={() => this.changeState('signIn')} >Back to Sign In</button>
             </div>

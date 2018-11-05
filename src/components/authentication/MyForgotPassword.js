@@ -7,7 +7,7 @@ export class MyForgotPassword extends ForgotPassword {
     return (
       <div>
         <div className="form-group">
-          <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="text" id="username" key="username" name="username" placeholder="Username" onChange={ this.handleInputChange }/>
+          <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="text" id="username" key="username" name="username" placeholder="Email" onChange={ this.handleInputChange }/>
         </div>
         <div className="py-1">
           <button type="button" onClick={this.send} className="btn btn-block rounded-0 btn-primary">{I18n.get('Send Code')}</button>

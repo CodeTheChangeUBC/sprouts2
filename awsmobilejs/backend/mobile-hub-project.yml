@@ -133,6 +133,6 @@ features:
     components:
       sign-in-user-pools: !com.amazonaws.mobilehub.v0.UserPoolsIdentityProvider 
         attributes:
-          user-pool-id: us-west-2_J0AiDEs1z
+          user-pool-id: us-west-2_5GU76pPTc
 name: sprouts-test
 region: us-west-2
