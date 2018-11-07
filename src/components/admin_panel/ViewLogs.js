@@ -106,14 +106,15 @@ export class ViewLogs extends React.Component {
       durations[users[i]] = 0;
       costs[users[i]] = 0;
     }
-    lineArray.push("User, Date, Location, Start Time, End Time, Meal, Cost");
+    lineArray.push("User, Date, Location, Start Time, End Time, Meal, Cost ($)");
     data.forEach(function(el){
       let mealList = "";
       let end =  new moment(el.endTime, 'HH:mm');
       let start =  new moment(el.startTime, 'HH:mm');
       let duration = end.diff(start,'minutes');
-      durations[el.name] += duration;
-      costs[el.name] += el.cost;
+      let x = new moment(durations[el.name], 'minutes');
+      durations[el.name] = x.add(duration, 'minutes');
+      costs[el.name] += Number(el.cost);
       for (let i=0; i< el.meal.length; i++) {
         mealList += (el.meal[i][0] + "; ");
       }
@@ -122,8 +123,7 @@ export class ViewLogs extends React.Component {
     }); 
 
     lineArray.push("\r\n");
-    lineArray.push("User, Total Time, Total Cost");
-
+    lineArray.push("User, Time (HH:mm), Total Cost ($)");
     for (let i=0; i<users.length; i++) {
       let user = users[i];
       let x = new moment(durations[user], 'mm');
@@ -134,6 +134,7 @@ export class ViewLogs extends React.Component {
       }
     }
 
+    console.log(durations);
     csvContent += lineArray.join("\r\n");
     let encodedUri = encodeURI(csvContent);
     window.open(encodedUri);
