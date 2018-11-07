@@ -124,6 +124,7 @@ export class ViewLogs extends React.Component {
 
     lineArray.push("\r\n");
     lineArray.push("User, Time (HH:mm), Total Cost ($)");
+
     for (let i=0; i<users.length; i++) {
       let user = users[i];
       let x = new moment(durations[user], 'mm');
@@ -133,8 +134,6 @@ export class ViewLogs extends React.Component {
         lineArray.push(line);
       }
     }
-
-    console.log(durations);
     csvContent += lineArray.join("\r\n");
     let encodedUri = encodeURI(csvContent);
     window.open(encodedUri);
