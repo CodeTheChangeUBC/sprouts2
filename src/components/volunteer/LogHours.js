@@ -17,7 +17,7 @@ export class LogHours extends React.Component {
   componentDidMount() {
     Auth.currentSession()
       .then((session) => {
-        this.setState({name: session.idToken.payload.name});
+        this.setState({name: session.idToken.payload.email});
       })
       .catch(err => console.log(err));
   }
