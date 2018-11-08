@@ -11,31 +11,31 @@ features:
           sdk-generation-stage-name: Development
         paths:
           /Meal_Options: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/MealOptions-20181104141330.zip
+            codeFilename: uploads/MealOptions-20181107153035.zip
             description: 'Handler for calls to resource path : /Meal_Options/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: AiT/8zov1TUpOZZ62Lbnes87tb4U1wlzmcIJjUF7XBM=
+            hashcode: QExKyPnHNLUirzjUpcGvvjoR+SqYGMpvxCCmlGqowLs=
             memorySize: '128'
-            modified: '2018-11-04T22:14:11.200+0000'
+            modified: '2018-11-07T23:31:12.423+0000'
             name: MealOptions
             runtime: nodejs6.10
             timeout: '3'
-            version: XS4Tuu0u9yCl4S6D52PE1g35Su6ZjphT
+            version: eM9QORtF_HKMShUVIdUaseA3mbpkSUSa
           '/Meal_Options/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/MealOptions-20181104141330.zip
+            codeFilename: uploads/MealOptions-20181107153035.zip
             description: 'Handler for calls to resource path : /Meal_Options/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: AiT/8zov1TUpOZZ62Lbnes87tb4U1wlzmcIJjUF7XBM=
+            hashcode: QExKyPnHNLUirzjUpcGvvjoR+SqYGMpvxCCmlGqowLs=
             memorySize: '128'
-            modified: '2018-11-04T22:14:11.200+0000'
+            modified: '2018-11-07T23:31:12.423+0000'
             name: MealOptions
             runtime: nodejs6.10
             timeout: '3'
-            version: UJ9SrlgPtuaJ98.CcgHr0cC7tHAotZyj
+            version: 049KGSbpDEd2eN.RRut1oI2.eyi5K6vM
       Volunteer_LogsCRUD: !com.amazonaws.mobilehub.v0.API 
         attributes:
           name: Volunteer_LogsCRUD
@@ -43,31 +43,31 @@ features:
           sdk-generation-stage-name: Development
         paths:
           /Volunteer_Logs: !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/VolunteerLogs-20181104141330.zip
+            codeFilename: uploads/VolunteerLogs-20181028153617.zip
             description: 'Handler for calls to resource path : /Volunteer_Logs/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: Tm7eDGaibzL7kkDtZacadDwpeO/nXMXLB+ZLBu0QNYo=
+            hashcode: 4Qm9lUruQFeBULDS3BCf4amf26Gzg7QDWj3GbaWi0CM=
             memorySize: '128'
-            modified: '2018-11-04T22:14:10.670+0000'
+            modified: '2018-11-07T23:10:48.004+0000'
             name: VolunteerLogs
             runtime: nodejs6.10
             timeout: '3'
-            version: R7T_MTUnx5qTOF_WyJPx0AdlKFSHkbt_
+            version: er4RdeEDQWr.8eJfhHGts.vsAMUm5ohS
           '/Volunteer_Logs/{proxy+}': !com.amazonaws.mobilehub.v0.Function 
-            codeFilename: uploads/VolunteerLogs-20181104141330.zip
+            codeFilename: uploads/VolunteerLogs-20181028153617.zip
             description: 'Handler for calls to resource path : /Volunteer_Logs/{proxy+}'
             enableCORS: true
             environment: {}
             handler: lambda.handler
-            hashcode: Tm7eDGaibzL7kkDtZacadDwpeO/nXMXLB+ZLBu0QNYo=
+            hashcode: 4Qm9lUruQFeBULDS3BCf4amf26Gzg7QDWj3GbaWi0CM=
             memorySize: '128'
-            modified: '2018-11-04T22:14:10.670+0000'
+            modified: '2018-11-07T23:10:48.004+0000'
             name: VolunteerLogs
             runtime: nodejs6.10
             timeout: '3'
-            version: HfupsOD0dCBKGI9tfd2oUzv6BacvXCAb
+            version: 1fd3_XKWTpuEyutE8EmRYYJlqBwQBfC.
   content-delivery: !com.amazonaws.mobilehub.v0.ContentDelivery 
     attributes:
       enabled: true
