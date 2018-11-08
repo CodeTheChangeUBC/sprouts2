@@ -27,9 +27,10 @@ export class MySignIn extends SignIn {
           this.changeState('requireNewPassword', user);
         } else {
           this.checkContact(user);
+          window.location.reload();
         }
       })
-      .then(window.location.reload())
+      // .then(window.location.reload())
       .catch(err => {
         if (err.code === 'UserNotConfirmedException') {
           console.log('the user is not confirmed');
