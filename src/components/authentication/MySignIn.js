@@ -27,8 +27,10 @@ export class MySignIn extends SignIn {
           this.changeState('requireNewPassword', user);
         } else {
           this.checkContact(user);
+          window.location.reload();
         }
       })
+      // .then(window.location.reload())
       .catch(err => {
         if (err.code === 'UserNotConfirmedException') {
           console.log('the user is not confirmed');
@@ -58,7 +60,7 @@ export class MySignIn extends SignIn {
             </div>
             <form>
               <div className="form-group">
-                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="email" id="username" key="username" name="username" placeholder="Email" onChange={ this.handleEmail }/>
+                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="email" id="username" key="username" name="username" placeholder="Username or Email" onChange={ this.handleEmail }/>
               </div>
               <div className="form-group">
                 <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="password" id="password" key="password" name="password" placeholder="Password" onChange={ this.handlePassword }/>

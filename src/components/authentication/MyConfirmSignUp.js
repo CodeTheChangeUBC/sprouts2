@@ -23,7 +23,6 @@ export class MyConfirmSignUp extends ConfirmSignUp {
     const { username, code } = this.state;
     Auth.confirmSignUp(username, code)
       .then(data => {
-        console.log(data);
         this.changeState('signedUp');
         alert("Successfully signed up");
       })

@@ -17,7 +17,7 @@ export class LogHours extends React.Component {
   componentDidMount() {
     Auth.currentSession()
       .then((session) => {
-        this.setState({name: session.idToken.payload.email});
+        this.setState({name: session.idToken.payload.name});
       })
       .catch(err => console.log(err));
   }
@@ -67,7 +67,6 @@ export class LogHours extends React.Component {
       alert("Please select a location from the dropdown menu.");
       return false;
     }
-    console.log(this.state.meal);
     if (!(this.state.meal[0][0]) || (this.state.meal[0][0] ==="Choose...")) {
       alert("Please select a meal option from the dropdown menu");
       return false;
@@ -107,7 +106,7 @@ export class LogHours extends React.Component {
       this.setState({apiData: response.data.reverse()});
       this.parseMealData();
     }).catch(error => {
-      console.log("Err " + error);
+      console.log(error);
     });
   }
 
@@ -136,9 +135,7 @@ export class LogHours extends React.Component {
   removeMeal (meal) {
     let newMeal = this.state.meal;
     let x = newMeal.indexOf(meal);
-    console.log("x is " + x);
     if (x >= 0 && this.state.numMeals>1) {
-      console.log("x is " + x);
 
       newMeal.splice(x,1);
       this.setState({meal: newMeal});
@@ -189,7 +186,6 @@ export class LogHours extends React.Component {
     } 
     else  {
       newMeal[i][1] = 0;
-      console.log(newMeal[i][0]);
       if (this.state.numMeals > 1) {
         newMeal.splice(i,1);
         let num =this.state.numMeals-1;

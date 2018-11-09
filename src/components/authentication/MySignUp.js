@@ -45,6 +45,7 @@ export class MySignUp extends SignUp {
       attributes: {email, name}
     })
       .then(data => {
+        alert("Please check your email for your account verification link.")
         this.changeState('signIn');
       })
       .catch(err => { 
@@ -62,7 +63,7 @@ export class MySignUp extends SignUp {
   }
   
   handleEmail(event) {
-    this.setState({ email: event.target.value, username: event.target.value });
+    this.setState({ email: event.target.value});
   }
   
   handleUsername(event) {
@@ -89,9 +90,9 @@ export class MySignUp extends SignUp {
               <div className="form-group">
                 <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="email" id="email" key="email" name="email" placeholder="Email" onChange={ this.handleEmail } value={ this.state.email }/>
               </div>
-              {/* <div className="form-group">
+              <div className="form-group">
                 <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="text" id="username" key="username" name="username" placeholder="Username" onChange={ this.handleUsername } value={ this.state.username }/>
-              </div> */}
+              </div>
               <div className="form-group">
                 <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="password" id="password" key="password" name="password" placeholder="Password" onChange={ this.handlePassword } value={ this.state.password }/>
               </div>
