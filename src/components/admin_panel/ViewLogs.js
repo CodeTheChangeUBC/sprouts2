@@ -95,29 +95,43 @@ export class ViewLogs extends React.Component {
       this.getTableData();
     });
   }
+
   exportData() {
     let data = this.filteredData;
-    let lineArray = [];
+    let users = this.state.users;
+    let exportData = this.printShifts(users, data);
+    this.exportCSV(exportData);
+  }
+  
+  exportCSV(lineArray) {
     let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += lineArray.join("\r\n");
+    let encodedUri = encodeURI(csvContent);
+    window.open(encodedUri);
+  }
+  
+  printShifts(userList, data) {
     let durations = {};
     let costs = {};
     let mealItems = {}
-    let users = this.state.users;
-    for (let i=0; i<users.length; i++) {
+    let users = userList;
+    let lineArray = [];
+    for (let i = 0; i < users.length; i++) {
       durations[users[i]] = 0;
       costs[users[i]] = 0;
     }
     lineArray.push("User, Date, Location, Start Time, End Time, Meal, Cost ($)");
-    data.forEach(function(el){
+    data.forEach(function (el) {
       let mealList = "";
-      let end =  new moment(el.endTime, 'HH:mm');
-      let start =  new moment(el.startTime, 'HH:mm');
-      let duration = end.diff(start,'minutes');
+      let end = new moment(el.endTime, 'HH:mm');
+      let start = new moment(el.startTime, 'HH:mm');
+      let duration = end.diff(start, 'minutes');
       let x = new moment(durations[el.name], 'minutes');
+
       durations[el.name] = x.add(duration, 'minutes');
       costs[el.name] += Number(el.cost);
 
-      for (let i=0; i< el.meal.length; i++) {
+      for (let i = 0; i < el.meal.length; i++) {
         let meal = el.meal[i][0];
         if (!mealItems[meal]) {
           mealItems[meal] = 1;
@@ -126,34 +140,40 @@ export class ViewLogs extends React.Component {
         }
         mealList += (meal + "; ");
       }
-      let line = el.name + "," + el.date + "," + el.location + "," + el.startTime + "," + el.endTime + "," + mealList + "," +  el.cost;
+      let line = el.name + "," + el.date + "," + el.location + "," + el.startTime + "," + el.endTime + "," + mealList + "," + el.cost;
       lineArray.push(line);
-    }); 
+    });
+    lineArray = this.printUserStats(lineArray, users, durations, costs);
+    lineArray = this.printMealCount(lineArray, mealItems);
+    return lineArray;
+  }
 
-    lineArray.push("\r\n");
-    lineArray.push("User, Time (HH:mm), Total Cost ($)");
-
-    for (let i=0; i<users.length; i++) {
+  printUserStats(lineArray, users, durations, costs) {
+    let output = lineArray;
+    output.push("\r\n");
+    output.push("User, Time (HH:mm), Total Cost ($)");
+    for (let i = 0; i < users.length; i++) {
       let user = users[i];
       let x = new moment(durations[user], 'mm');
       durations[user] = x.format('HH:mm');
       if (durations[user] !== "00:00") {
         let line = user + "," + durations[user] + "," + costs[user];
-        lineArray.push(line);
+        output.push(line);
       }
     }
+    return output;
+  }
 
-    lineArray.push("\r\n");
-    lineArray.push("Meal Option, Quantity");
+  printMealCount(lineArray, mealItems) {
+    let output = lineArray;
+    output.push("\r\n");
+    output.push("Meal Option, Quantity");
     let mealOptions = Object.keys(mealItems);
-
-    for (let i=0; i<mealOptions.length; i++) {
+    for (let i = 0; i < mealOptions.length; i++) {
       let line = mealOptions[i] + ',' + mealItems[mealOptions[i]];
-      lineArray.push(line);
+      output.push(line);
     }
-    csvContent += lineArray.join("\r\n");
-    let encodedUri = encodeURI(csvContent);
-    window.open(encodedUri);
+    return output;
   }
 
   selectRow = (el) => {
@@ -186,7 +206,6 @@ export class ViewLogs extends React.Component {
                 <Table col1="User" col2="Date" col3="Location" data={this.state.tableData} select={this.selectRow}/>
               </div>
               <div className="container bg-white py-1 fixed-bottom">
-                {/* <Button title="Update" color="btn-primary rounded-0 btn-block" onClick={() => this.parseTableData()} /> */}
                 <Button title="Export Data" color="btn-danger rounded-0 btn-block" onClick={() => this.exportData()} />
               </div>
             </div>
