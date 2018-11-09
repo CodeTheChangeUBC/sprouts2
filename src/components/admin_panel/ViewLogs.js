@@ -101,6 +101,7 @@ export class ViewLogs extends React.Component {
     let csvContent = "data:text/csv;charset=utf-8,";
     let durations = {};
     let costs = {};
+    let mealItems = {}
     let users = this.state.users;
     for (let i=0; i<users.length; i++) {
       durations[users[i]] = 0;
@@ -115,8 +116,15 @@ export class ViewLogs extends React.Component {
       let x = new moment(durations[el.name], 'minutes');
       durations[el.name] = x.add(duration, 'minutes');
       costs[el.name] += Number(el.cost);
+
       for (let i=0; i< el.meal.length; i++) {
-        mealList += (el.meal[i][0] + "; ");
+        let meal = el.meal[i][0];
+        if (!mealItems[meal]) {
+          mealItems[meal] = 1;
+        } else {
+          mealItems[meal]++;
+        }
+        mealList += (meal + "; ");
       }
       let line = el.name + "," + el.date + "," + el.location + "," + el.startTime + "," + el.endTime + "," + mealList + "," +  el.cost;
       lineArray.push(line);
@@ -133,6 +141,16 @@ export class ViewLogs extends React.Component {
         let line = user + "," + durations[user] + "," + costs[user];
         lineArray.push(line);
       }
+    }
+
+    lineArray.push("\r\n");
+    lineArray.push("Meal Option, Quantity");
+    let mealOptions = Object.keys(mealItems);
+
+    for (let i=0; i<mealOptions.length; i++) {
+      let line = mealOptions[i] + ',' + mealItems[mealOptions[i]];
+      console.log(line);
+      lineArray.push(line);
     }
     csvContent += lineArray.join("\r\n");
     let encodedUri = encodeURI(csvContent);
