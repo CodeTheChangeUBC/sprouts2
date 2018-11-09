@@ -149,7 +149,6 @@ export class ViewLogs extends React.Component {
 
     for (let i=0; i<mealOptions.length; i++) {
       let line = mealOptions[i] + ',' + mealItems[mealOptions[i]];
-      console.log(line);
       lineArray.push(line);
     }
     csvContent += lineArray.join("\r\n");
