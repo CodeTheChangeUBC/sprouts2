@@ -230,7 +230,7 @@ export class LogHours extends React.Component {
               <Input value={this.state.startTime} title="Start time" type="time" update={(event) => this.setState({startTime: event.target.value})}/>
               <Input value={this.state.endTime} title="End time" type="time" update={(event) => this.setState({endTime: event.target.value})}/>
               <Select value={this.state.location} title="Location" update={(event) => this.setState({location: event.target.value})} 
-                dropdown={["Seedlings", "Sprouts Cafe", "Community Eats", "Sprouts Boxes", "Events/Promotions"]} />
+                dropdown={["Seedlings", "Sprouts Cafe", "Community Eats", "Sprouts Boxes", "Events/Promotions", "Other"]} />
               {this.createMealInputs()}
               <div className="clearfix d-flex justify-content-start pb-3">
                 <button type="button" className="btn btn-outline-success" aria-label="Close" onClick={this.addMeal} disabled={addButton}>

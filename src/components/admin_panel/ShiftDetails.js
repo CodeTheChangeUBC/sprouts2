@@ -136,7 +136,7 @@ export class ShiftDetails extends React.Component {
       return (<Select title="Location" renderTitle={true}
       value={this.state.location}
       update={this.handleChangeLocation}
-      dropdown={["Seedlings", "Sprouts Cafe", "Community Eats", "Sprouts Boxes", "Events/Promotions"]}
+      dropdown={["Seedlings", "Sprouts Cafe", "Community Eats", "Sprouts Boxes", "Events/Promotions", "Other"]}
       />
       )
     } 

@@ -5,6 +5,7 @@ import { Button } from '../fsc/Button';
 import { Table } from '../fsc/Table';
 import { Input } from '../fsc/Input';
 import { Select } from '../fsc/Select';
+let moment = require('moment');
 
 export class ViewLogs extends React.Component {
   constructor(props) {
@@ -95,21 +96,46 @@ export class ViewLogs extends React.Component {
     });
   }
   exportData() {
-    let data = this.state.apiData;
+    let data = this.filteredData;
     let lineArray = [];
     let csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += "User, Date, Location, Start Time, End Time, Meal, Cost\r\n";
-
+    let durations = {};
+    let costs = {};
+    let users = this.state.users;
+    for (let i=0; i<users.length; i++) {
+      durations[users[i]] = 0;
+      costs[users[i]] = 0;
+    }
+    lineArray.push("User, Date, Location, Start Time, End Time, Meal, Cost ($)");
     data.forEach(function(el){
       let mealList = "";
+      let end =  new moment(el.endTime, 'HH:mm');
+      let start =  new moment(el.startTime, 'HH:mm');
+      let duration = end.diff(start,'minutes');
+      let x = new moment(durations[el.name], 'minutes');
+      durations[el.name] = x.add(duration, 'minutes');
+      costs[el.name] += Number(el.cost);
       for (let i=0; i< el.meal.length; i++) {
         mealList += (el.meal[i][0] + "; ");
       }
       let line = el.name + "," + el.date + "," + el.location + "," + el.startTime + "," + el.endTime + "," + mealList + "," +  el.cost;
       lineArray.push(line);
     }); 
-    csvContent += lineArray.join("\r\n");
 
+    lineArray.push("\r\n");
+    lineArray.push("User, Time (HH:mm), Total Cost ($)");
+    for (let i=0; i<users.length; i++) {
+      let user = users[i];
+      let x = new moment(durations[user], 'mm');
+      durations[user] = x.format('HH:mm');
+      if (durations[user] !== "00:00") {
+        let line = user + "," + durations[user] + "," + costs[user];
+        lineArray.push(line);
+      }
+    }
+
+    console.log(durations);
+    csvContent += lineArray.join("\r\n");
     let encodedUri = encodeURI(csvContent);
     window.open(encodedUri);
   }

@@ -25,6 +25,11 @@ $> awsmobile init <project-id>
 ```bash
 $> npm install
 ```
+### Update AWSMobile Configurations
+
+```bash
+$> awsmobile pull
+```
 
 ### Run app locally
 
