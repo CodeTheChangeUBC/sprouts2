@@ -1,0 +1,23 @@
+{
+    "extends": "airbnb",
+    "rules": {
+        "react/destructuring-assignment": 0,
+        "arrow-body-style": 0,
+        "no-use-before-define": 0,
+        "react/require-default-props": 0,
+        "no-plusplus": 0,
+        "no-console": 0,
+        "prefer-destructuring": 0,
+        "no-alert": 0,
+        "react/jsx-no-bind": 0,
+        "react/forbid-prop-types": 0,
+        "react/sort-comp": 0,
+        "object-shorthand": 0,
+        "react/jsx-boolean-value": 0,
+        "no-else-return": 0,
+        "operator-linebreak": 0,
+        "one-var": 0,
+        "one-var-declaration-per-line": 0,
+        "class-methods-use-this": 0
+    }
+}

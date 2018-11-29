@@ -4,18 +4,18 @@ import { I18n} from 'aws-amplify';
 
 export class MyVerifyContact extends VerifyContact {
   verifyView() {
-    var user = this.props.authData;
+    let user = this.props.authData;
     if (!user) {
       console.log('no user for verify');
       return null;
     }
-    var unverified = user.unverified;
+    let unverified = user.unverified;
 
     if (!unverified) {
       console.log('no unverified on user');
       return null;
     }
-    var email = unverified.email,
+    let email = unverified.email,
         phone_number = unverified.phone_number;
 
     let emailInput;
@@ -61,7 +61,7 @@ export class MyVerifyContact extends VerifyContact {
   }
 
   showComponent() {
-    var _props = this.props,
+    let _props = this.props,
       hide = _props.hide;
 
     if (hide && hide.includes(VerifyContact)) {

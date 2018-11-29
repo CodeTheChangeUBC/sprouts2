@@ -19,6 +19,13 @@ export class MyConfirmSignUp extends ConfirmSignUp {
     this.handleResend = this.handleResend.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    const username = nextProps.authData;
+    if (username && !this.state.username) {
+      this.setState({ username });
+    }
+  }
+
   confirm() {
     const { username, code } = this.state;
     Auth.confirmSignUp(username, code)
@@ -39,13 +46,6 @@ export class MyConfirmSignUp extends ConfirmSignUp {
       .catch(err => {
         this.error(err);}
       );
-  }
-  
-  componentWillReceiveProps(nextProps) {
-    const username = nextProps.authData;
-    if (username && !this.state.username) {
-      this.setState({ username });
-    }
   }
   
   handleResend(event) {

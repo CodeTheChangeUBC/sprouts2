@@ -27,13 +27,15 @@ export class RoutingTable extends Component {
   }
 
   handleSelectRow = (value) => {
-    this.setState({name: value.name});
-    this.setState({date: value.date});
-    this.setState({location: value.location});
-    this.setState({startTime: value.startTime});
-    this.setState({endTime: value.endTime});
-    this.setState({meal: value.meal});
-    this.setState({cost: value.cost});
+    this.setState({
+      name: value.name,
+      date: value.date,
+      location: value.location,
+      startTime: value.startTime,
+      endTime: value.endTime,
+      meal: value.meal,
+      cost: value.cost
+    });
   }
 
   render() {

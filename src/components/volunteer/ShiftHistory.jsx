@@ -1,23 +1,20 @@
 import React from 'react';
-import { Auth } from 'aws-amplify';
-import { API } from 'aws-amplify';
+import PropTypes from 'prop-types';
+import { Auth, API } from 'aws-amplify';
 import { Header } from '../fsc/Header';
 import { Table } from '../fsc/Table';
-
 
 export class ShiftHistory extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       tableData: [],
-      apiData: undefined
     };
 
     this.getTableData();
   }
 
-  selectRow = (el) => {
+  selectRow(el) {
     this.props.onSelectRow(this.state.apiData[el]);
     this.props.history.push('/shiftDetails');
   }
@@ -25,29 +22,24 @@ export class ShiftHistory extends React.Component {
   getTableData() {
     Auth.currentSession()
       .then((session) => {
-        let apiName = 'Volunteer_LogsCRUD';
-        let path = '/Volunteer_Logs/' + session.idToken.payload.email;
+        const apiName = 'Volunteer_LogsCRUD';
+        const path = `/Volunteer_Logs/${session.idToken.payload.email}`;
 
-        API.get(apiName, path).then(response => {
-          this.setState({apiData: response.reverse()});
-          this.parseTableData();
-        }).catch(error => {
+        API.get(apiName, path).then((response) => {
+          this.parseTableData(response.reverse());
+        }).catch((error) => {
           console.log(error.response);
         });
       })
       .catch(err => console.log(err));
   }
 
-  parseTableData = () => {
-    let tableData = [];
-    let apiData = this.state.apiData;
-
-    apiData.forEach(el => {
-      let row = {col1: el.name, col2: el.date, col3: el.location};
-      tableData.push(row);
+  parseTableData(apiData) {
+    apiData.forEach((data) => {
+      return { col1: data.name, col2: data.date, col3: data.location };
     });
 
-    this.setState({tableData: tableData});
+    this.setState({ tableData: apiData });
   }
 
   render() {
@@ -71,3 +63,9 @@ export class ShiftHistory extends React.Component {
     );
   }
 }
+
+ShiftHistory.propTypes = {
+  onSelectRow: PropTypes.func,
+};
+
+export default ShiftHistory;

@@ -33,7 +33,7 @@ export class MyForgotPassword extends ForgotPassword {
   }
 
   showComponent() {
-    var _props = this.props,
+    let _props = this.props,
         hide = _props.hide;
 
     if (hide && hide.includes(ForgotPassword)) {
