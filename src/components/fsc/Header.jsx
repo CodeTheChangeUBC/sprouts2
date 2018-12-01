@@ -16,7 +16,7 @@ export const Header = (props) => {
 };
 
 const renderButton = (link, title) => {
-  const backBtn = link ? (<a onClick={link} className="btn btn-lg btn-link position-absolute d-flex align-self-center p-0 pr-3">&larr;</a>) : undefined;
+  const backBtn = link ? (<button onClick={link} className="btn btn-lg btn-link position-absolute d-flex align-self-center p-0 pr-3 text-body no-underline">&larr;</button>) : undefined;
   return (
     <h3 className="text-center mb-0">
       {backBtn}

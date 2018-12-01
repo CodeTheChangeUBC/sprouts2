@@ -27,7 +27,7 @@ Input.propTypes = {
   update: PropTypes.func,
   type: PropTypes.string,
   disabled: PropTypes.bool,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string
 };
 
 Input.defaultProps = {

@@ -8,7 +8,7 @@ export class ShiftHistory extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tableData: [],
+      tableData: []
     };
 
     this.getTableData();
@@ -20,26 +20,27 @@ export class ShiftHistory extends React.Component {
   }
 
   getTableData() {
-    Auth.currentSession()
-      .then((session) => {
-        const apiName = 'Volunteer_LogsCRUD';
-        const path = `/Volunteer_Logs/${session.idToken.payload.email}`;
-
-        API.get(apiName, path).then((response) => {
-          this.parseTableData(response.reverse());
-        }).catch((error) => {
-          console.log(error.response);
-        });
-      })
-      .catch(err => console.log(err));
+    Auth.currentSession().then((session) => {
+      const apiName = 'Volunteer_LogsCRUD';
+      const path = `/Volunteer_Logs/${session.idToken.payload.email}`;
+      
+      API.get(apiName, path).then((response) => {
+        this.parseTableData(response.reverse());
+      }).catch((error) => {
+        console.log(error.response);
+      });
+    }).catch(err => {
+      console.log(err);
+    });
   }
 
   parseTableData(apiData) {
+    let tableData = [];
     apiData.forEach((data) => {
-      return { col1: data.name, col2: data.date, col3: data.location };
+      tableData.push({ col1: data.fullName, col2: data.date, col3: data.location });
     });
 
-    this.setState({ tableData: apiData });
+    this.setState({ tableData: tableData });
   }
 
   render() {
@@ -54,7 +55,7 @@ export class ShiftHistory extends React.Component {
                 col2="Date"
                 col3="Location"
                 data={this.state.tableData}
-                select={this.selectRow}
+                select={this.selectRow.bind(this)}
               />
             </div>
           </div>

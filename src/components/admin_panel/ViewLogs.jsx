@@ -12,54 +12,46 @@ const moment = require('moment');
 export class ViewLogs extends React.Component {
   constructor(props) {
     super(props);
+
+    this.apiData = [];
     this.state = {
       tableData: [],
-      fromDate: '',
-      toDate: '',
+      fromDate: this.setDates("from"),
+      toDate: this.setDates("to"),
       users: [],
       selectedUser: 'All Users',
     };
-    // Select rows from filteredData, not from ApiData
-    this.filteredData = [];
+    
     this.getTableData();
-    this.setDates();
   }
 
-  setDates() {
+  setDates(date) {
     const d = new Date();
     const month = d.getMonth() + 1;
     const day = d.getDate();
     const monthNumber = month < 10 ? '0' : '';
-    const toDate = `${d.getFullYear()}-${monthNumber}${month}-${day < 10 ? '0' : ''}${day}`;
-    const fromDate = `${d.getFullYear()}-${monthNumber}${month}-01`;
 
-    this.setState({
-      fromDate: fromDate,
-      toDate: toDate,
-    });
+    if (date === "from") {
+      return `${d.getFullYear()}-${monthNumber}${month}-01`;
+    } else if (date === "to") {
+      return `${d.getFullYear()}-${monthNumber}${month}-${day < 10 ? '0' : ''}${day}`;
+    }
   }
 
   getTableData() {
     const apiName = 'Volunteer_LogsCRUD';
     let path = '/Volunteer_Logs';
-    let all = true;
-    if (this.state.selectedUser !== 'All Users') {
-      path = `/Volunteer_Logs/${this.state.selectedUser}`;
-      all = false;
-    }
     API.get(apiName, path).then((response) => {
-      const apiData = all ? response.data.reverse() : response.reverse();
-      this.parseTableData(apiData);
+      this.apiData = response.data.reverse();
+      this.parseTableData();
     }).catch((error) => {
       console.log(`Error ${error}`);
     });
   }
 
-  parseTableData(apiData) {
+  parseTableData() {
     let tableData = [];
-    let allUsers = [];
-    let filtered = [];
-    apiData.forEach((el) => {
+    this.apiData.forEach((el) => {
       const date = new Date(el.date).toISOString();
       let fromDate, toDate;
       try {
@@ -69,24 +61,37 @@ export class ViewLogs extends React.Component {
         console.log('Invalid date format');
       }
       if (date >= fromDate && date <= toDate) {
-        tableData.push({ col1: el.name, col2: el.date, col3: el.location });
-        filtered.push(el);
+        if (this.state.selectedUser === 'All Users') {
+          tableData.push({ col1: el.fullName, col2: el.date, col3: el.location });
+        } else {
+          if (this.state.selectedUser === el.fullName) {
+            tableData.push({ col1: el.fullName, col2: el.date, col3: el.location });
+          }
+        }
       }
-      allUsers.push(el.name);
     });
-    if (this.state.users.length === 0) {
-      const filterUsers = new Set(allUsers);
-      this.setState({ users: [...filterUsers] });
-    }
-    this.filteredData = filtered;
     this.setState({ tableData: tableData });
+    this.getUsers();
+  }
+
+  getUsers() {
+    const users = new Set();
+    const fromDate = new Date(this.state.fromDate).toISOString();
+    const toDate = new Date(this.state.toDate).toISOString();
+    this.apiData.forEach(function (el) {
+      const date = new Date(el.date).toISOString();
+      if (date >= fromDate && date <= toDate) {
+        users.add(el.fullName);
+      }
+    });
+    this.setState({ users: [...users] });
   }
 
   handleFilter(event) {
     this.setState({
       selectedUser: event.target.value,
     }, () => {
-      this.getTableData();
+      this.parseTableData();
     });
   }
 
@@ -154,7 +159,8 @@ export class ViewLogs extends React.Component {
   }
 
   selectRow(el) {
-    this.props.onSelectRow(this.filteredData[el]);
+    const row = this.apiData[el];
+    this.props.onSelectRow(row);
     this.props.history.push('/shiftDetails');
   }
 
@@ -196,10 +202,10 @@ export class ViewLogs extends React.Component {
                 update={event => this.handleFilter(event)}
               />
               <div className="pb-5 mb-4">
-                <Table col1="User" col2="Date" col3="Location" data={this.state.tableData} select={this.selectRow} />
+                <Table col1="User" col2="Date" col3="Location" data={this.state.tableData} select={this.selectRow.bind(this)} />
               </div>
               <div className="container bg-white py-1 fixed-bottom">
-                <Button title="Export Data" color="btn-danger rounded-0 btn-block" onClick={() => this.exportCSV(this.printShifts([...this.filteredData]))} />
+                <Button title="Export Data" color="btn-danger rounded-0 btn-block" onClick={() => this.exportCSV(this.printShifts([...this.apiData]))} />
               </div>
             </div>
           </div>

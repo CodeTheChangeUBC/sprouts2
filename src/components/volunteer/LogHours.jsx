@@ -14,11 +14,24 @@ export class LogHours extends React.Component {
   }
 
   componentDidMount() {
-    Auth.currentSession()
-      .then((session) => {
-        this.setState({ name: session.idToken.payload.name });
-      })
-      .catch(err => console.log(err));
+    Auth.currentSession().then((session) => {
+      this.setState({ name: session.idToken.payload.email });
+      this.setState({ fullName: session.idToken.payload.name });
+    }).catch(err => {
+      console.log(err);
+    });
+
+    const apiName = 'Meal_OptionsCRUD';
+    const path = '/Meal_Options';
+    API.get(apiName, path).then((response) => {
+      let mealOptions = {};
+      response.data.reverse(0).forEach((data) => {
+        mealOptions[data.Name] = data.Price;
+      });
+      this.setState({ mealOptions: mealOptions });
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   getDefaultState() {
@@ -36,10 +49,10 @@ export class LogHours extends React.Component {
       endMinute -= 60;
     }
     const endTime = `${endHour < 10 ? '0' : ''}${endHour}:${endMinute < 10 ? '0' : ''}${endMinute}`;
-    this.getMealData();
 
     return {
       name: '',
+      fullName: '',
       date: date,
       startTime: startTime,
       endTime: endTime,
@@ -48,7 +61,7 @@ export class LogHours extends React.Component {
       cost: '0',
       numMeals: 1,
       mealOptions: {},
-      errorMsg: '',
+      errorMsg: ''
     };
   }
 
@@ -79,6 +92,7 @@ export class LogHours extends React.Component {
     const init = {
       body: {
         name: this.state.name,
+        fullName: this.state.fullName,
         date: this.state.date,
         startTime: this.state.startTime,
         endTime: this.state.endTime,
@@ -99,30 +113,14 @@ export class LogHours extends React.Component {
     }
   }
 
-  getMealData() {
-    const apiName = 'Meal_OptionsCRUD';
-    const path = '/Meal_Options';
-    API.get(apiName, path).then((response) => {
-      this.parseMealData(response.data.reverse(0));
-    }).catch((error) => {
-      console.log(error);
-    });
-  }
-
-  parseMealData(apiData) {
-    let mealOptions = {};
-    apiData.forEach((data) => {
-      mealOptions[data.Name] = data.Price;
-    });
-    this.setState({ mealOptions: mealOptions });
-  }
-
-
   addMeal() {
+    let nextState = {};
     this.setState((prevState) => {
-      let nextState = { ...prevState };
+      nextState = { ...prevState };
       nextState.numMeals = prevState.numMeals + 1;
-      nextState.meal = prevState.meal.push(['', '0']);
+      let newMeal = prevState.meal;
+      newMeal.push(['', '0']);
+      nextState.meal = newMeal;
       return nextState;
     });
   }
@@ -134,8 +132,12 @@ export class LogHours extends React.Component {
       this.setState((prevState) => {
         let nextState = { ...prevState };
         nextState.numMeals = prevState.numMeals - 1;
-        nextState.cost = prevState.cost - meal[1];
-        nextState.meal = prevState.meal.splice(i, 1);
+        let newCost = prevState.cost;
+        newCost = newCost - meal[1];
+        nextState.cost = newCost;
+        let newMeal = prevState.meal;
+        newMeal.splice(i, 1);
+        nextState.meal = newMeal;
         return nextState;
       });
     }
@@ -152,7 +154,7 @@ export class LogHours extends React.Component {
               renderTitle={false}
               value={this.state.meal[i][0]}
               title="Meal"
-              update={event => this.setMealAndCost(event, i)}
+              update={(e) => this.setMealAndCost(e, i)}
               dropdown={Object.keys(this.state.mealOptions)}
             />
           </div>
@@ -240,13 +242,13 @@ export class LogHours extends React.Component {
                   type="button"
                   className="btn btn-outline-success"
                   aria-label="Close"
-                  onClick={this.addMeal}
+                  onClick={this.addMeal.bind(this)}
                   disabled={addButton}
                 >
                   Add Meal Item
                 </button>
               </div>
-              <Input value={this.state.cost} title="Cost ($)" disabled={true} />
+              <Input value={this.state.cost.toString()} title="Cost ($)" disabled={true} />
               <p>(Every field is required)</p>
               <p className={this.state.errorMsg === 'Something went wrong, please try again.' ? 'text-danger' : 'text-success'}>
                 {this.state.errorMsg}

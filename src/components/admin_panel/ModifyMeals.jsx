@@ -8,14 +8,16 @@ import { Input } from '../fsc/Input';
 export class ModifyMeals extends React.Component {
   constructor(props) {
     super(props);
+    
+    this.selectedRow = false;
+    this.apiData = [];
     this.state = {
       tableData: [],
       edit: false,
       newItem: '',
       newPrice: -1,
     };
-    this.selectedRow = false;
-    this.apiData = undefined;
+
     this.getTableData();
   }
 
@@ -31,11 +33,11 @@ export class ModifyMeals extends React.Component {
   }
 
   parseTableData() {
-    let apiData = [...this.apiData];
-    apiData.forEach((data) => {
-      return { col1: data.Name, col2: data.Price };
+    let tableData = []
+    this.apiData.forEach((data) => {
+      tableData.push({ col1: data.Name, col2: data.Price });
     });
-    this.setState({ tableData: apiData });
+    this.setState({ tableData: tableData });
   }
 
   addMealOption() {
@@ -122,7 +124,7 @@ export class ModifyMeals extends React.Component {
           <div className="row justify-content-center">
             <div className="col-12 my-3">
               <div className="pb-5 mb-4">
-                <Table col1="Meal" col2="Price" select={this.selectRow} data={this.state.tableData} />
+                <Table col1="Meal" col2="Price" select={this.selectRow.bind(this)} data={this.state.tableData} />
                 <div hidden={!this.state.edit}>
                   <Input
                     title="Meal Option"

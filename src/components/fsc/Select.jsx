@@ -16,15 +16,13 @@ export const Select = (props) => {
 };
 
 const createDropdown = (dropdown) => {
-  let counter = 0;
-  return dropdown.forEach((item) => {
-    counter++;
-    return (
-      <option key={counter} value={item}>
-        {item}
-      </option>
+  const options = new Array(dropdown.length);
+  for (let i=0; i<dropdown.length; i++) {
+    options.push(
+      <option key={i} value={dropdown[i]}>{dropdown[i]}</option>
     );
-  });
+  }
+  return options;
 };
 
 Select.propTypes = {
