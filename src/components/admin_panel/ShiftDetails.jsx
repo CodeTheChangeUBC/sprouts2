@@ -23,7 +23,7 @@ export class ShiftDetails extends React.Component {
       mealOptions: {},
     };
     this.getTableData();
-
+    this.mealChanged = false;
     this.handleSubmit = this.handleSubmit.bind(this);
     this.createMealInputs = this.createMealInputs.bind(this);
     this.addMeal = this.addMeal.bind(this);
@@ -53,20 +53,37 @@ export class ShiftDetails extends React.Component {
     this.setState({ mealOptions: mealOptions });
   }
 
+  addMeal() {
+    this.mealChanged = true;
+    let nextState = {};
+    this.setState((prevState) => {
+      nextState = { ...prevState };
+      nextState.num = prevState.num + 1;
+      let newMeal = prevState.meal;
+      newMeal.push(['', '0']);
+      nextState.meal = newMeal;
+      return nextState;
+    });
+  }
+
+  // Remove a meal input
   removeMeal(meal) {
+    this.mealChanged = true;
     const i = this.state.meal.indexOf(meal);
     if (i >= 0 && this.state.num > 1) {
       this.setState((prevState) => {
         let nextState = { ...prevState };
         nextState.num = prevState.num - 1;
-        nextState.meal = prevState.meal.splice(i, 1);
-        nextState.cost = prevState.cost - meal[1];
-
+        let newCost = prevState.cost;
+        newCost = newCost - meal[1];
+        nextState.cost = newCost;
+        let newMeal = prevState.meal;
+        newMeal.splice(i, 1);
+        nextState.meal = newMeal;
         return nextState;
       });
     }
   }
-
   // Render Add Meal dropdown
   createMealInputs() {
     let mealList = [];
@@ -148,14 +165,17 @@ export class ShiftDetails extends React.Component {
   setMealAndCost(event, i) {
     let newMeal = this.state.meal;
     newMeal[i][0] = event.target.value;
-
+    this.mealChanged = true;
     if (this.state.mealOptions[event.target.value]) {
       newMeal[i][1] = this.state.mealOptions[event.target.value];
     } else {
       newMeal[i][1] = 0;
       if (this.state.num > 1) {
         newMeal.splice(i, 1);
-        this.setState({ num: this.state.num - 1 });
+        let num = this.state.num - 1;
+        this.setState({ num: num });
+      } else {
+        newMeal[i][0] = "";
       }
     }
     let newCost = Number(0);
@@ -168,35 +188,29 @@ export class ShiftDetails extends React.Component {
     });
   }
 
-  // Handle add meal button
-  addMeal() {
-    this.setState((prevState) => {
-      let nextState = { ...prevState };
-      nextState.meal = prevState.meal.push(['', '0']);
-      nextState.num = prevState.num + 1;
-      return nextState;
-    });
-  }
-
   // Check if any fields have been updated
   updated() {
-    let valid = false;
+    let valid = true;
     let updated = false;
-    if (this.state.edit ||
-        (this.state.startTime !== this.props.startTime) || 
+    if (this.state.edit) {
+      if ((this.state.startTime !== this.props.startTime) ||
         (this.state.endTime !== this.props.endTime) ||
-        (this.state.location !== this.props.location)) {
-      updated = true;
+        (this.state.location !== this.props.location) ||
+        this.mealChanged){
+        updated = true;
+      } 
     }
     for (let i = 0; i < this.state.num; i++) {
-      if (this.state.meal[i][0] !== 'Choose...') {
-        valid = true;
-        break;
+      console.log(this.state.meal[i][0]);
+      if (this.state.meal[i][0] === '') {
+        valid = false;
       }
     }
     if (this.state.endTime <= this.state.startTime || this.state.location === 'Choose...') {
+      console.log("invalid");
       valid = false;
     }
+    console.log(updated);
     return (updated && valid);
   }
 
@@ -216,16 +230,11 @@ export class ShiftDetails extends React.Component {
   }
 
   handleEdit() {
-    if (this.state.edit) {
-      this.props.history.push(this.props.backLink);
-    }
-    this.setState((prevState) => {
-      let nextState = { ...prevState };
-      nextState.edit = !prevState.edit;
-      return nextState;
-    });
+  if(this.state.edit) {
+    this.props.history.push(this.props.backLink);
   }
-
+    this.setState({ edit: !this.state.edit });
+  };
   // Update database entry
   handleSubmit(event) {
     const apiName = 'Volunteer_LogsCRUD';
@@ -254,8 +263,10 @@ export class ShiftDetails extends React.Component {
         alert('Please select a location from the dropdown menu.');
       } else if (this.state.endTime <= this.state.startTime) {
         alert('Please select a valid start and end time.');
-      } else {
+      } else if (this.mealChanged) {
         alert('Please select a meal from the dropdown menu.');
+      } else {
+        alert('No changes made: Please make changes or click "Cancel".');  
       }
     } else {
       alert('No changes made: Select edit to make changes.');

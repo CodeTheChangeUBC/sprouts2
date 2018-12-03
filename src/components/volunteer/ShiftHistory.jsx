@@ -10,22 +10,22 @@ export class ShiftHistory extends React.Component {
     this.state = {
       tableData: []
     };
-
+    this.apiData = [];
     this.getTableData();
   }
 
   selectRow(el) {
-    this.props.onSelectRow(this.state.apiData[el]);
+    this.props.onSelectRow(this.apiData[el]);
     this.props.history.push('/shiftDetails');
   }
 
   getTableData() {
     Auth.currentSession().then((session) => {
       const apiName = 'Volunteer_LogsCRUD';
-      const path = `/Volunteer_Logs/${session.idToken.payload.email}`;
-      
+      const path = `/Volunteer_Logs/${session.idToken.payload["cognito:username"]}`;
       API.get(apiName, path).then((response) => {
-        this.parseTableData(response.reverse());
+        this.apiData = response.reverse();
+        this.parseTableData();
       }).catch((error) => {
         console.log(error.response);
       });
@@ -34,12 +34,11 @@ export class ShiftHistory extends React.Component {
     });
   }
 
-  parseTableData(apiData) {
+  parseTableData() {
     let tableData = [];
-    apiData.forEach((data) => {
-      tableData.push({ col1: data.fullName, col2: data.date, col3: data.location });
+    this.apiData.forEach((data) => {
+      tableData.push({ col1: data.name, col2: data.date, col3: data.location });
     });
-
     this.setState({ tableData: tableData });
   }
 

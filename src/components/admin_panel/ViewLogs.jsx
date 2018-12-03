@@ -14,6 +14,7 @@ export class ViewLogs extends React.Component {
     super(props);
 
     this.apiData = [];
+    this.filteredData = [];
     this.state = {
       tableData: [],
       fromDate: this.setDates("from"),
@@ -51,6 +52,7 @@ export class ViewLogs extends React.Component {
 
   parseTableData() {
     let tableData = [];
+    let filtered = [];
     this.apiData.forEach((el) => {
       const date = new Date(el.date).toISOString();
       let fromDate, toDate;
@@ -62,14 +64,17 @@ export class ViewLogs extends React.Component {
       }
       if (date >= fromDate && date <= toDate) {
         if (this.state.selectedUser === 'All Users') {
-          tableData.push({ col1: el.fullName, col2: el.date, col3: el.location });
+          tableData.push({ col1: el.name, col2: el.date, col3: el.location });
+          filtered.push(el);
         } else {
-          if (this.state.selectedUser === el.fullName) {
-            tableData.push({ col1: el.fullName, col2: el.date, col3: el.location });
+          if (this.state.selectedUser === el.name) {
+            tableData.push({ col1: el.name, col2: el.date, col3: el.location });
+            filtered.push(el);
           }
         }
       }
     });
+    this.filteredData = filtered;
     this.setState({ tableData: tableData });
     this.getUsers();
   }
@@ -81,7 +86,7 @@ export class ViewLogs extends React.Component {
     this.apiData.forEach(function (el) {
       const date = new Date(el.date).toISOString();
       if (date >= fromDate && date <= toDate) {
-        users.add(el.fullName);
+        users.add(el.name);
       }
     });
     this.setState({ users: [...users] });
@@ -159,7 +164,7 @@ export class ViewLogs extends React.Component {
   }
 
   selectRow(el) {
-    const row = this.apiData[el];
+    const row = this.filteredData[el];
     this.props.onSelectRow(row);
     this.props.history.push('/shiftDetails');
   }
@@ -205,7 +210,7 @@ export class ViewLogs extends React.Component {
                 <Table col1="User" col2="Date" col3="Location" data={this.state.tableData} select={this.selectRow.bind(this)} />
               </div>
               <div className="container bg-white py-1 fixed-bottom">
-                <Button title="Export Data" color="btn-danger rounded-0 btn-block" onClick={() => this.exportCSV(this.printShifts([...this.apiData]))} />
+                <Button title="Export Data" color="btn-danger rounded-0 btn-block" onClick={() => this.exportCSV(this.printShifts([...this.filteredData]))} />
               </div>
             </div>
           </div>

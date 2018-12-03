@@ -15,8 +15,7 @@ export class LogHours extends React.Component {
 
   componentDidMount() {
     Auth.currentSession().then((session) => {
-      this.setState({ name: session.idToken.payload.email });
-      this.setState({ fullName: session.idToken.payload.name });
+      this.setState({ name: session.idToken.payload["cognito:username"]});
     }).catch(err => {
       console.log(err);
     });
@@ -52,7 +51,6 @@ export class LogHours extends React.Component {
 
     return {
       name: '',
-      fullName: '',
       date: date,
       startTime: startTime,
       endTime: endTime,
@@ -92,7 +90,6 @@ export class LogHours extends React.Component {
     const init = {
       body: {
         name: this.state.name,
-        fullName: this.state.fullName,
         date: this.state.date,
         startTime: this.state.startTime,
         endTime: this.state.endTime,
