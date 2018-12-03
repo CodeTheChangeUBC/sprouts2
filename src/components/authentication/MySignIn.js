@@ -59,11 +59,13 @@ export class MySignIn extends SignIn {
               <h5 className="mt-2">Sign in with your Sprouts Account</h5>
             </div>
             <form>
-              <div className="form-group">
-                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="email" id="username" key="username" name="username" placeholder="Username or Email" onChange={ this.handleEmail }/>
+              <div className="form-group">                  
+                <h6 className="text-left mb-0">Username or Email</h6>
+                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="email" id="username" key="username" name="username" onChange={ this.handleEmail }/>
               </div>
               <div className="form-group">
-                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="password" id="password" key="password" name="password" placeholder="Password" onChange={ this.handlePassword }/>
+                <h6 className="text-left mb-0">Password</h6>
+                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="password" id="password" key="password" name="password" onChange={ this.handlePassword }/>
               </div>
               <div className="py-1">
                 <button type="button" className="btn btn-block rounded-0 btn-primary" onClick={ this.signIn } value="Sign In" >{ I18n.get('Sign In') }</button>
