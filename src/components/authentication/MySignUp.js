@@ -7,7 +7,6 @@ export class MySignUp extends SignUp {
     super(props);
     this._validAuthStates = ['signUp'];
     this.state = {
-      name: "",
       username: "",
       password: "",
       checkPassword: "",
@@ -17,15 +16,12 @@ export class MySignUp extends SignUp {
     this.handleCheckPassword = this.handleCheckPassword.bind(this);
     this.handleUsername = this.handleUsername.bind(this);
     this.handlePassword = this.handlePassword.bind(this);
-    this.handleName = this.handleName.bind(this);
     this.handleEmail = this.handleEmail.bind(this);
   }
   
   signUp() {
-    const { name, username, password, email } = this.state;
-    if (this.state.name === "") {
-      alert("Please enter your name.")
-    } else if (this.state.email === "") {
+    const { username, password, email } = this.state;
+    if (this.state.email === "") {
       alert("Please enter a valid email address.") 
     } else if (this.state.username === "") {
       alert("Please enter a valid UserName.") 
@@ -42,7 +38,7 @@ export class MySignUp extends SignUp {
       Auth.signUp({
       username,
       password,
-      attributes: {email, name}
+      attributes: {email}
     })
       .then(data => {
         alert("Please check your email for your account verification link.")
@@ -56,10 +52,6 @@ export class MySignUp extends SignUp {
         }
       });
     }
-  }
-  
-  handleName(event) {
-    this.setState({ name: event.target.value });
   }
   
   handleEmail(event) {
@@ -82,22 +74,25 @@ export class MySignUp extends SignUp {
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5 text-center my-3">
-            <h1>Create A New Account</h1>
+            <h1 className="pb-2">Create A New Account</h1>
             <form>
               <div className="form-group">
-                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="text" id="name" key="name" name="name" placeholder="Name" onChange={ this.handleName } value={ this.state.name }/>
+                <h6 className="text-left mb-0">Username</h6>
+                <p className="text-left text-muted small mb-0">Please use your name without spaces.</p>
+                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="text" id="username" key="username" name="username" placeholder="Ex. JohnDoe" onChange={ this.handleUsername } value={ this.state.username }/>
               </div>
               <div className="form-group">
-                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="email" id="email" key="email" name="email" placeholder="Email" onChange={ this.handleEmail } value={ this.state.email }/>
+                <h6 className="text-left mb-0">Email</h6>
+                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="email" id="email" key="email" name="email" placeholder="Ex. John@example.com" onChange={ this.handleEmail } value={ this.state.email }/>
               </div>
               <div className="form-group">
-                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="text" id="username" key="username" name="username" placeholder="Username" onChange={ this.handleUsername } value={ this.state.username }/>
+                <h6 className="text-left mb-0">Password</h6>
+                <p className="text-left text-muted small mb-0">Use 8 or more characters with a mix of lowercase and uppercase letters and numbers.</p>
+                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="password" id="password" key="password" name="password" placeholder="" onChange={ this.handlePassword } value={ this.state.password }/>
               </div>
               <div className="form-group">
-                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="password" id="password" key="password" name="password" placeholder="Password" onChange={ this.handlePassword } value={ this.state.password }/>
-              </div>
-              <div className="form-group">
-                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="password" id="checkPassword" key="checkPassword" name="checkPassword" placeholder="Confirm Password" 
+                <h6 className="text-left mb-0">Verify Password</h6>
+                <input className="form-control rounded-0 border-left-0 border-right-0 border-top-0" type="password" id="checkPassword" key="checkPassword" name="checkPassword" placeholder="" 
                 onChange={ this.handleCheckPassword } value={ this.state.checkPassword }/>
               </div>
               <div className="py-1">

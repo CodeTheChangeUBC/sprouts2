@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 // Admin Panel Views
 import { AdminOptions } from './admin_panel/AdminOptions';
-import { ManageVolunteers } from './admin_panel/ManageVolunteers';
 import { ViewLogs } from './admin_panel/ViewLogs';
 import { ShiftDetails } from './admin_panel/ShiftDetails';
 import { ModifyMeals } from './admin_panel/ModifyMeals';
@@ -27,13 +26,15 @@ export class RoutingTable extends Component {
   }
 
   handleSelectRow = (value) => {
-    this.setState({name: value.name});
-    this.setState({date: value.date});
-    this.setState({location: value.location});
-    this.setState({startTime: value.startTime});
-    this.setState({endTime: value.endTime});
-    this.setState({meal: value.meal});
-    this.setState({cost: value.cost});
+    this.setState({
+      name: value.name,
+      date: value.date,
+      location: value.location,
+      startTime: value.startTime,
+      endTime: value.endTime,
+      meal: value.meal,
+      cost: value.cost
+    });
   }
 
   render() {
@@ -66,7 +67,6 @@ export class RoutingTable extends Component {
         <Router>
           <div>
             <Route exact path="/" component={AdminOptions}/>
-            <Route path="/manageVolunteers" component={ManageVolunteers}/>
             <Route path="/logHours" component={LogHours}/>
             <Route path="/modifyMeals" component={ModifyMeals}/>
             <Route path="/viewLogs" render={(props) => <ViewLogs {...props} onSelectRow={this.handleSelectRow} />}/>

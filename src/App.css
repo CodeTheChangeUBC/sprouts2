@@ -37,3 +37,11 @@
   border-width: 2px !important;
   box-shadow: none !important;
 }
+
+.no-underline {
+  text-decoration: none;
+}
+
+button.no-underline:hover {
+  text-decoration: none;
+}
